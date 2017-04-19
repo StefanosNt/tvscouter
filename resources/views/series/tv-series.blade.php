@@ -144,7 +144,7 @@
 							  '<div class="col s5">'+v.name+'</div>'+
 							  '<div class="col s4">'+v.air_date+'</div>'+
 						  '</div>'+
-						  '<div class="collapsible-body episode-body"><span>{{$v['overview']}}</span></div>'+
+						  '<div class="collapsible-body episode-body"><span>'+v.overview+'</span></div>'+
 						'</li>'
 //						'<tr class="collection">'+
 //							'<td class="collection-item">'+v.episode_number+'</td>'+
