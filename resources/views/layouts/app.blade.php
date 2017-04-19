@@ -66,8 +66,8 @@
 	</nav>
 
 	<ul id="sidebar" class="side-nav fixed">
-		<li><a class="waves-effect waves-red" href="/homepage"><i class="material-icons">home</i><span class="sidebar-text">HOME</span></a></li>
-		<li><a class="waves-effect waves-red" href="/popular"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
+		<li><a class="waves-effect waves-red" href="/"><i class="material-icons">home</i><span class="sidebar-text">HOME</span></a></li>
+		<li><a class="waves-effect waves-red" href="/tv/popular"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
 		<li><a class="waves-effect waves-red" href="/watchlist"><i class="material-icons">check</i><span class="sidebar-text">WATCHLIST</span></a></li>
 		<li><a class="waves-effect waves-red" href="/towatch"><i class="material-icons">schedule</i><span class="sidebar-text">TO WATCH</span></a></li>
 		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">FAVORITES</span></a></li>

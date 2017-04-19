@@ -146,7 +146,7 @@ class SeriesController extends Controller
 //		return view('tv-series');
 		
 	}
-	public function addToFavorites ($sid,$uid) { 
+	public function addToFavorites ($uid,$sid) { 
 		$seriesTable = new Series;
 		$seriesTable->insert('1','1');
 		return $seriesTable::all();
@@ -157,5 +157,3 @@ class SeriesController extends Controller
 		
 	}
 }
- 
- 
