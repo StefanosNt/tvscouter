@@ -1,0 +1,51 @@
+
+// Fonts
+//@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+//@import "variables";
+
+
+// Bootstrap
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+html,body{
+  height: 100%;
+}
+#sidebar a{
+  padding-left: 13px;
+}
+.content{  
+  position: absolute; 
+  margin-left: 210px; 
+  margin-top: 90px;
+  clear: both;
+}
+#navbar{
+  position: absolute;
+  z-index: 99;
+  box-shadow: 0 0 0 0 , 0 0 0 0 , 0 0 0;
+ } 
+#sidebar{   
+  position: fixed; 
+  z-index: 90; 
+  width: 190px; 
+  padding-top:90px;   
+
+/*  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);*/
+  
+  
+}
+@media screen and (max-width: 992px) {
+  #sidebar {  
+    transform: translateX(0%)!important;
+    width: 50px;
+    transition: width .1s;
+  } 
+  .sidebar-text{
+    display: none; 
+  }
+  .content{
+    margin-left: 70px;
+  }
+} 
