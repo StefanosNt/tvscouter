@@ -156,4 +156,11 @@ class SeriesController extends Controller
 	public function showFavorites() {
 
 	}
+
+	public function watchlist(){
+		// return view('series/watchlist');
+		$watchlist =  Series::all();
+		return view('series.watchlist',compact('watchlist'));
+	}
+
 }

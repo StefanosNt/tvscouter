@@ -15,21 +15,26 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('landing');
-Route::get('/tv/popular', 'SeriesController@popular')->middleware('auth');
+Route::GET('/', 'HomeController@index')->name('landing');
+Route::GET('/tv/popular', 'SeriesController@popular')->middleware('auth');
+Route::GET('/tv/watchlist', 'SeriesController@watchlist')->middleware('auth');
 
-Route::get('/tv/{id}','SeriesController@showSeries');
-Route::get('/tv/{id}/season/{season}','SeriesController@getSeason');
-Route::get('/tv/{id}/all','SeriesController@getAllSeasons');
-Route::get('/tv/search/{title}','SeriesController@searchTvSeries');
+Route::GET('/tv/{id}','SeriesController@showSeries');
+Route::GET('/tv/{id}/season/{season}','SeriesController@getSeason');
+Route::GET('/tv/{id}/all','SeriesController@getAllSeasons');
+Route::GET('/tv/search/{title}','SeriesController@searchTvSeries');
 
 
-Route::post('/tv/{id}','SeriesController@addToFavorites');
+Route::POST('/tv/{id}','SeriesController@addWatchlist');
+Route::DELETE('/tv/{id}','SeriesController@removeWatchlist');
+Route::PATCH('/tv/{id}','SeriesController@favorite');
+Route::PATCH('/tv/{id}','SeriesController@removeFavorite');
+
 
 
 //TESTING
 
-Route::get('/ss','SeriesController@ss');
+Route::GET('/ss','SeriesController@ss');
 
 //Route::get('/tv/{seriesTitle}','SeriesController@getTvSeries');
 //Route::get('/tv/{id}/season/{season}','SeriesController@showSeriesSeason');

@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="csrf-token" content="{{ Session::token() }}"> 
+	<meta name="csrf-token" content="{{ Session::token() }}">
 	<title>Sami</title>
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -69,13 +69,14 @@
 	<ul id="sidebar" class="side-nav fixed">
 		<li><a class="waves-effect waves-red" href="/"><i class="material-icons">home</i><span class="sidebar-text">HOME</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/popular"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
-		<li><a class="waves-effect waves-red" href="/watchlist"><i class="material-icons">check</i><span class="sidebar-text">WATCHLIST</span></a></li>
+		<li><a class="waves-effect waves-red" href="/tv/watchlist"><i class="material-icons">check</i><span class="sidebar-text">WATCHLIST</span></a></li>
 		<li><a class="waves-effect waves-red" href="/towatch"><i class="material-icons">schedule</i><span class="sidebar-text">TO WATCH</span></a></li>
 		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">FAVORITES</span></a></li>
 	</ul>
 	<main>
-
-		@yield('content')
+		<div class="content">
+			@yield('content') 
+		</div>
 
 	</main>
 

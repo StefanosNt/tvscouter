@@ -6,8 +6,8 @@
 	  	<div class="banner series-banner z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}');"></div>
 		<div class="series-poster-block">
 			<div><img class="series-poster-img z-depth-2" src="https://image.tmdb.org/t/p/w500/{{$series['poster_path']}}"></div>
+			<button class="watchlist-btn btn">Add to watchlist</button>
 			<button class="favorite-btn btn">Add to favorites</button>
-			<button class="watchlist-btn btn">Watch later <i id='watch-later-icon' class='material-icons right invisible'>check</i></button>
 		</div>
 
       </div>
@@ -128,11 +128,11 @@
 			$(".watchlist-btn").click(function(){
 				if(j===0){
 					$(".watchlist-btn").addClass("watchlist-btn-true");
-					$("#watch-later-icon").removeClass("invisible");
+					$(".watchlist-btn").text("Watching");
 					j=1;
 				}else{
 					$(".watchlist-btn").removeClass("watchlist-btn-true");
-					$("#watch-later-icon").addClass("invisible");
+					$(".watchlist-btn").text("Add to watchlist");
 					j=0;
 				}
 			})
