@@ -40,6 +40,12 @@
 		margin-top:50px;
 		margin-left:140px; 
 	}
+	.status{
+	font-weight: 300;
+    font-size: 0.8rem!important;
+    color: #fff!important; 
+    border-radius: 2px;
+	}
 	
 
 
@@ -80,20 +86,8 @@
 		</div>
 	  </div> 
 	  <p>loading....</p>  
-	</div>  
-
-
-	<div class='search-results'>
-	
-<!--
-		<a href="http://placehold.it" style="float:left;padding-right:10px"><img src="http://placehold.it/250x150"></a>
-		<p><h5>The flash</h5></p>
-		<p>03/01/2015</p>
-	</div>
--->
- 
- 
-    
+	</div>   
+	<div class='search-results'></div>
 </div>
 
 @endsection
@@ -160,8 +154,9 @@
 								'</div>'+
 								'<div class="card-stacked">'+
 									'<div class="card-content">'+
-										'<a href="/tv/'+id+'">'+name+'</a>'+
+										'<a href="/tv/'+id+'">'+name+'</a>'+ 
 										'<p style="color:#8b8b8b">'+airdate+'</p>'+
+//										'<span class="status badge green">WATCHING</span>'+
 									'</div>'+
 								'</div>'+
 							'</div>'

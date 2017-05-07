@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Schema; 
+use Illuminate\Support\Facades\Auth; 
+use GuzzleHttp\Client; 
 use App\Series;
+use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
 {
@@ -146,21 +148,107 @@ class SeriesController extends Controller
 //		return view('tv-series');
 
 	}
-	public function addToFavorites (Request $request) {
-		$seriesTable = new Series;
-		$seriesTable->insert($request->get('uid') ,$request->get('sid'), $request->get('fav'));
-		return $seriesTable::all();
-
-	}
-
-	public function showFavorites() {
-
-	}
-
-	public function watchlist(){
-		// return view('series/watchlist');
-		$watchlist =  Series::all();
+	public function watchlistState (Request $request) { 
+		
+		$ser = new Series;  
+		$watching = $ser->isWatching($request->get('uid'),$request->get('sid'));
+		
+		return $watching == 1 ? 1 : 0;
+		
+	} 
+	
+	public function editWatchlist (Request $request) {
+		$ser = new Series; 
+		if($ser->isWatching($request->get('uid'),$request->get('sid'))==0){
+			$ser->insertIntoWatchlist($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
+			return 'added';
+		}
+		else{
+			$ser->deleteFromWatchlist($request->get('uid'),$request->get('sid'));
+			return 'deleted';
+		} 
+		
+	}  
+	
+	public function watchlist(){ 
+		
+//		$watching =  Series::all();
+//		foreach ($watching as $value) {
+//			$watchlist[]= self::getAllSeasons($value->series_id);
+//		} 
+		
+		$ser = new Series;  
+		$watchlist = json_decode($ser->getWatchlist(Auth::user()->id),true); 
 		return view('series.watchlist',compact('watchlist'));
 	}
 
+	public function schedule(){
+		$curDate = date('Y-m-d');
+		
+		$watching =  Series::all();
+		foreach ($watching as $value) {
+			$watchlist[]= self::getAllSeasons($value->series_id);
+		}
+		
+		
+		foreach ($watchlist as $series) { 
+			
+			if($series['status']!=="Canceled" && $series['status']!=="Ended"){
+				
+				$curSeason = $series['number_of_seasons'];
+				
+				foreach ($series['season/'. $curSeason]['episodes'] as $episodes){
+										
+					if ($curDate < $episodes['air_date']) { 
+						$episodes['series_name'] = $series['name'];
+						$episodes['series_id'] = $series['id'];
+						$episodes['network'] = $series['networks'];
+						$episodes['genre'] = $series['genres'];
+						$episodes['series_poster_path'] = $series['poster_path'];
+						$airingNext[] = $episodes; 
+						
+//						echo $series['name']. $episodes['air_date'] .  '<br>' ;
+					}
+					
+				} 
+				
+//				echo $curSeason. '<br>';
+				
+			}
+		}
+//		return dd($airingNext); 
+//		return dd($watchlist);
+		return view('series.schedule',compact('airingNext'));  
+		
+	}
+	 
+	public function ss(){ 
+		 
+		$curDate = date('Y-m-d',strtotime(date('Y-m-d')));
+		$date = date('Y-m-d',strtotime('2017-05-11'));
+		
+		$epYear = date('Y',strtotime($date));
+		$epMonth = date('m',strtotime($date));
+		$epDay = date('d',strtotime($date));
+		
+		$yearDiff = date('Y',strtotime($date)) - date('Y',strtotime($curDate)); //must be >=0
+		$monthDiff = date('m',strtotime($date)) - date('m',strtotime($curDate)); // must be >=0
+		$dayDiff = date('d',strtotime($date)) - date('d',strtotime($curDate)); 
+		
+//		if($curDate > $date){
+//			echo $date. '<br>'. $curDate; 
+//		}
+//		return '<br>'. $yearDiff. '<br>'. $monthDiff. '<br>'. $dayDiff ;
+		return view('series.test',compact('date','yearDiff','monthDiff','epYear','epMonth','epDay'));
+//		return dd(self::getSeries(60735));
+	}
+	
+	public function sss(){
+		$ser = new Series;
+//		$ser->insertIntoWatchlist(6 ,1, 's','s');
+//		return $s = DB::table('_watchlist_uid_6')->where('series_id','=','6')->count();
+//				DB::table('_watchlist_uid_'. 6)->where('sid','=',1412)->delete(); 
+ 	return dd($ser->getWatchlist(6));
+//		$ser->createWatchlistTable( Auth::user()->id );
+	}
 }

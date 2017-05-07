@@ -2,12 +2,11 @@
 @extends('layouts.app')
 @section('content')
 	<div class="container-fluid">
-   	  <div class="series-poster-wrapper">
-	  	<div class="banner series-banner z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}');"></div>
+   	  <div class="series-poster-wrapper z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}');">
+<!--	  	<div class="banner series-banner z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}');"></div>-->
 		<div class="series-poster-block">
 			<div><img class="series-poster-img z-depth-2" src="https://image.tmdb.org/t/p/w500/{{$series['poster_path']}}"></div>
-			<button class="watchlist-btn btn">Add to watchlist</button>
-			<button class="favorite-btn btn">Add to favorites</button>
+			<button class="watchlist-btn btn">Add to watchlist</button> 
 		</div>
 
       </div>
@@ -94,49 +93,59 @@
 @section('js')
 
 	<script>
-		$.ajaxSetup({
-						headers: {
-								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						}
-		});
 		$(document).ready(function(){
-			var i=0,j=0;
-			$(".favorite-btn").click(function(){
-				if(i===0){
-					$(".favorite-btn").addClass("favorite-btn-true");
-					$(".favorite-btn").text("favorite");
-					i=1;
-
-					$.ajax({
+			var watching,seasons;
+			var i=0;
+			
+			$.ajaxSetup({
+				headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			
+			function watchState(){
+				$.ajax({
+					'_token': $('meta[name=csrf-token]').attr('content'),
+					async:false,
+					method:'POST',
+					url:'/watchliststate',
+					data:{"uid" : {{ Auth::user()->id }} , "sid" : {{$series['id']}} },
+					success: function(data){
+						watching = data;
+					}
+				});
+			}
+			
+			function highlight(){
+				if (watching == 1) $(".watchlist-btn").addClass("watchlist-btn-true").text("Watching");
+				if (watching == 0) $(".watchlist-btn").removeClass("watchlist-btn-true").text("Add to watchlist");
+			}	
+			
+			
+			watchState();
+ 
+			console.log(watching);
+			
+			highlight();
+		
+			$(".watchlist-btn").click(function(){
+				
+				$.ajax({
 						'_token': $('meta[name=csrf-token]').attr('content'),
 						async:false,
 						method:'POST',
 						url:'/tv/{{$series['id']}}',
-						data:{"uid" : {{ Auth::user()->id }} , "sid" : {{$series['id']}} , "fav" : 1 },
+						data:{"uid" : {{ Auth::user()->id }} , "sid" : {{$series['id']}} , "sname" : "{{$series['name']}}" , "sposter" : "{{$series['poster_path']}}"  },
 						success: function(s){
 							console.log(s);
 						}
-					});
-
-
-				}else{
-					$(".favorite-btn").removeClass("favorite-btn-true");
-					$(".favorite-btn").text("Add to favorites");
-					i=0;
-				}
-			})
-			$(".watchlist-btn").click(function(){
-				if(j===0){
-					$(".watchlist-btn").addClass("watchlist-btn-true");
-					$(".watchlist-btn").text("Watching");
-					j=1;
-				}else{
-					$(".watchlist-btn").removeClass("watchlist-btn-true");
-					$(".watchlist-btn").text("Add to watchlist");
-					j=0;
-				}
-			})
-			var seasons =
+				});
+				
+				watchState();
+				console.log(watching);
+				highlight();
+			}) 
+			
 			$.ajax({
 				async:false,
 				method:'GET',
@@ -144,7 +153,7 @@
 				success: function(s){
 					 seasons = s;
 				}
-			}).responseJSON;
+			});
 
 			console.log(seasons);
 
