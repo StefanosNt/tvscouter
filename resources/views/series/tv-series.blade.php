@@ -1,5 +1,24 @@
 
 @extends('layouts.app')
+
+<style>
+	.title h2{
+		font-weight: 300;
+		margin-bottom:0px; 
+	}
+	.badges{
+		padding-left:10px;
+	}
+	.status{
+		font-weight: 400;
+		font-size: 0.8rem!important;
+		color: #fff!important; 
+		border-radius: 2px;
+		float:none!important; 
+		padding:6px!important;
+	}
+</style>
+
 @section('content')
 	<div class="container-fluid">
    	  <div class="series-poster-wrapper z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}');">
@@ -22,7 +41,17 @@
 	 $int = $int*10;
 	@endphp
 
-      <div class="title-block"><span class="title"><h2>{{$series['name']}}</h2></span> <span class="stars-container stars-{{$int}}">★★★★★</span><span class="rating">{{$series['vote_average']}}</span></div>
+      <div class="title-block">
+      	<span class="title"><h2>{{$series['name']}}</h2></span> 
+      	<span class="stars-container stars-{{$int}}">★★★★★</span>
+      	<span class="rating">{{$series['vote_average']}}</span>
+	  </div>
+	  <div class="badges">
+	  	<span class="status badge green">{{$series['networks'][0]['name']}}</span>
+		<span class="status badge light-blue darken-2">{{ date('Y',strtotime($series['first_air_date']))}}</span> 	
+	  	<span class="status badge red">{{$series['episode_run_time'][0]}}m</span>
+	  	<span class="status badge lime">{{$series['status']}}</span>
+	  </div>	
 
       <p class="series-overview">{{$series['overview']}}</p>
       <div class="row" class="series-details">

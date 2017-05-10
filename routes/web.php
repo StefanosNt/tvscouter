@@ -19,6 +19,7 @@ Route::GET('/', 'HomeController@index')->name('landing');
 Route::GET('/tv/popular', 'SeriesController@popular')->middleware('auth');
 Route::GET('/tv/schedule', 'SeriesController@schedule')->middleware('auth');
 Route::GET('/tv/watchlist', 'SeriesController@watchlist')->middleware('auth');
+Route::GET('/settings', 'UserController@settings')->middleware('auth');
 
 Route::GET('/tv/{id}','SeriesController@showSeries');
 Route::GET('/tv/{id}/season/{season}','SeriesController@getSeason');

@@ -22,17 +22,17 @@
 	<div id="later" class="row"></div>  
 	
 	<div class="row">
-  	@foreach($airingNext  as $k => $v) 
+  	@foreach($schedule  as $k => $v) 
 	  <div id="{{$loop->index}}" class="col s12 episode"> 
 		<div class="card horizontal">
 		  <div class="card-image">
-			<img class="series-img" src="{{'https://image.tmdb.org/t/p/w500'.$v['series_poster_path']}}">
+			<img class="series-img" src="{{'https://image.tmdb.org/t/p/w500'.$v['series_poster']}}">
 		  </div>
 		  <div class="card-stacked">
 			<div class="card-content">
-		  	  <span class="card-title"> <a href="/tv/{{$v['id']}}"> {{$v['series_name']}} </a> </span>
+		  	  <span class="card-title"> <a href="/tv/{{$v['series_id']}}"> {{$v['series_name']}} </a> </span>
 			  <p class='air-date'>{{$v['air_date']}}</p>
-			  <p class='ep-details'>Season {{$v['season_number']}} Episode {{$v['episode_number']}} - {{$v['name']}}</p>
+			  <p class='ep-details'>Season {{$v['season_number']}} Episode {{$v['episode_number']}} - {{$v['episode_name']}}</p>
 			</div>
 			<div class="card-action">
 			  <a href="#">This is a link</a>

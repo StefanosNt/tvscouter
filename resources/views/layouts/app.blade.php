@@ -16,12 +16,28 @@
 
    	<script>
 		$(document).ready(function(){
+			var i=0;
+			
 			$('.modal').modal();
-			$(".button-collapse").sideNav();
+			$(".button-collapse").sideNav(); 
+			
+			$('#sidebar-toggle').click(function(){
+				if(i%2==0){ 
+					$('main').addClass('zero-padding');
+					$('#sidebar').hide();
+					i++;
+				}else{ 
+					$('main').removeClass('zero-padding');
+					$('#sidebar').show();
+					i++;
+				}
+			});  
+			
 		});
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+		
     </script>
 
 	@yield('js')
@@ -29,7 +45,12 @@
 </head>
 
 <body>
-
+  <div id="sidebar-toggle" class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="material-icons">menu</i>
+    </a> 
+  </div>
+        
 	<nav id="navbar" class="top-nav">
 		<a href="#" data-activates="sidebar" class="button-collapse hide-on-med-and-up"><i class="material-icons">menu</i></a>
 		<div class="nav-wrapper">
@@ -41,13 +62,12 @@
 				@else
 					<li class="dropdown">
 						<a class='dropdown-button' href='#' data-activates='account'>
-							{{ Auth::user()->name }} <span class="caret"></span>
-						</a>
-
+							{{ Auth::user()->name }} 
+						</a> 
 						<ul id='account' class="dropdown-content">
-							<li><a href="#"> Account Settings </a></li>
+							<li><a class="waves-effect waves-red" href="/settings"> Account Settings </a></li>
 							<li>
-								<a href="{{ route('logout') }}"
+								<a class="waves-effect waves-red" href="{{ route('logout') }}"
 									onclick="event.preventDefault();
 											 document.getElementById('logout-form').submit();">
 									Logout
@@ -73,7 +93,7 @@
 		<li><a class="waves-effect waves-red" href="/tv/schedule"><i class="material-icons">schedule</i><span class="sidebar-text">SCHEDULE</span></a></li>
 		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">FAVORITES</span></a></li>
 	</ul>
-	<main>
+	<main class="main">
 		<div class="content">
 			@yield('content') 
 		</div>

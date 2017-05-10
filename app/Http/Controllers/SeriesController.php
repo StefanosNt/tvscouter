@@ -170,12 +170,7 @@ class SeriesController extends Controller
 		
 	}  
 	
-	public function watchlist(){ 
-		
-//		$watching =  Series::all();
-//		foreach ($watching as $value) {
-//			$watchlist[]= self::getAllSeasons($value->series_id);
-//		} 
+	public function watchlist(){  
 		
 		$ser = new Series;  
 		$watchlist = json_decode($ser->getWatchlist(Auth::user()->id),true); 
@@ -183,43 +178,9 @@ class SeriesController extends Controller
 	}
 
 	public function schedule(){
-		$curDate = date('Y-m-d');
-		
-		$watching =  Series::all();
-		foreach ($watching as $value) {
-			$watchlist[]= self::getAllSeasons($value->series_id);
-		}
-		
-		
-		foreach ($watchlist as $series) { 
-			
-			if($series['status']!=="Canceled" && $series['status']!=="Ended"){
-				
-				$curSeason = $series['number_of_seasons'];
-				
-				foreach ($series['season/'. $curSeason]['episodes'] as $episodes){
-										
-					if ($curDate < $episodes['air_date']) { 
-						$episodes['series_name'] = $series['name'];
-						$episodes['series_id'] = $series['id'];
-						$episodes['network'] = $series['networks'];
-						$episodes['genre'] = $series['genres'];
-						$episodes['series_poster_path'] = $series['poster_path'];
-						$airingNext[] = $episodes; 
-						
-//						echo $series['name']. $episodes['air_date'] .  '<br>' ;
-					}
-					
-				} 
-				
-//				echo $curSeason. '<br>';
-				
-			}
-		}
-//		return dd($airingNext); 
-//		return dd($watchlist);
-		return view('series.schedule',compact('airingNext'));  
-		
+		$ser = new Series;   
+ 		$schedule = json_decode($ser->getSchedule(Auth::user()->id),true);
+		return view('series.schedule',compact('schedule'));   
 	}
 	 
 	public function ss(){ 
@@ -248,7 +209,11 @@ class SeriesController extends Controller
 //		$ser->insertIntoWatchlist(6 ,1, 's','s');
 //		return $s = DB::table('_watchlist_uid_6')->where('series_id','=','6')->count();
 //				DB::table('_watchlist_uid_'. 6)->where('sid','=',1412)->delete(); 
- 	return dd($ser->getWatchlist(6));
+// 	return dd($ser->getWatchlist(6));
 //		$ser->createWatchlistTable( Auth::user()->id );
+		$client = new Client();
+		$seasons = $client->request('GET', "https://api.themoviedb.org/3/tv/60735?api_key=5356352546e70dce6c10c8c67d5e0604&append_to_response=",['verify' => FALSE ]);
+		$seasons=json_decode($seasons->getBody(),true);
+		dd($seasons); 
 	}
 }

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,9 +27,16 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+		
+		$schedule->call(function () {
+            DB::table('series')->insert( [ 'series_id' => 1234, 'user_id' => 11 ] );
+        })->everyMinute();
+		
+		
     }
 
     /**
+     * Register the Closure based commands for the application.
      * Register the Closure based commands for the application.
      *
      * @return void
