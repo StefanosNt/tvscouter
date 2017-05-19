@@ -46,31 +46,7 @@ class HomeController extends Controller
 				$watchlist = json_decode(DB::table('_watchlist_uid_'.Auth::user()->id)->get(),true);
 				
 				foreach($watchlist as $w){ 
-					$series= (new SeriesController)->getAllSeasons($w['series_id']); 
-					$curSeason = $series['number_of_seasons'];
-
-					if($series['status']!=="Canceled" && $series['status']!=="Ended"){   
-						foreach ($series['season/'. $curSeason]['episodes'] as $episodes){
-
-							if ($curDate <= $episodes['air_date']) {
-
-								$arr = [
-									'sid'			=>	$series['id'],
-									'sname'			=>	$series['name'], 
-									'sposter'		=>	$series['poster_path'],
-									'snetwork'		=>	implode(',', array_map(function($el){ return $el['name']; }, $series['networks'])),
-									'sgerne'		=>	implode(',', array_map(function($el){ return $el['name']; }, $series['genres'])),
-									'season'		=>	$series['number_of_seasons'],
-									'epnumber'		=>	$episodes['episode_number'],
-									'epname'		=>	$episodes['name'],
-									'epoverview'	=>	$episodes['overview'],
-									'epairdate'		=>	$episodes['air_date']
-								];	
-
-								$ser->insertIntoSchedule(Auth::user()->id,$arr); 
-							}  
-						}
-					}    
+	 				(new SeriesController)->addToSchedule($w['series_id'],$ser,$curDate);   
 				} 
 			} 
 			

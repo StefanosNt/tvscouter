@@ -45,38 +45,53 @@
 </head>
 
 <body>
-	<div id="sidebar-toggle" class="fixed-action-btn">
-		<a class="btn-floating red">
-			<i class="material-icons">menu</i>
-		</a> 
-	</div>  
-	<div id="search-button" class="fixed-action-btn">
-		<a class="btn-floating green right">
-			<i class="material-icons" >search</i>
-		</a> 
-		<div class="input">
-			<input class="right" type="text">
+  <div id="sidebar-toggle" class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="material-icons">menu</i>
+    </a> 
+  </div>
+        
+	<nav id="navbar" class="top-nav">
+		<a href="#" data-activates="sidebar" class="button-collapse hide-on-med-and-up"><i class="material-icons">menu</i></a>
+		<div class="nav-wrapper">
+			<a href="/" id="logo" class="brand-logo">SAMI</a>
+			<ul id="right-bar" class="right">
+				@if (Auth::guest())
+					<li><a class="modal-trigger" href="#login">Log In</a></li>
+					<li><a class="modal-trigger" href="#signup">Sign Up</a></li>
+				@else
+					<li class="dropdown">
+						<a class='dropdown-button' href='#' data-activates='account'>
+							{{ Auth::user()->name }} 
+						</a> 
+						<ul id='account' class="dropdown-content">
+							<li><a class="waves-effect waves-red" href="/settings"> Account Settings </a></li>
+							<li>
+								<a class="waves-effect waves-red" href="{{ route('logout') }}"
+									onclick="event.preventDefault();
+											 document.getElementById('logout-form').submit();">
+									Logout
+								</a>
+
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+									{{ csrf_field() }}
+								</form>
+							</li>
+
+						</ul>
+					</li>
+				@endif
+
+			</ul>
 		</div>
-		
-	</div>  
-	<ul id="sidebar" class="side-nav fixed red"> 
-			<li><a id="search-icon" class="right waves-effect waves-red" href="#"><i class="material-icons">search</i></a></li>
-		<div id="user">
-		  <a href="/settings"><span class="white-text name">{{ Auth::user()->name }}</span></a>
-		  <img class="circle" src="http://www.imran.com/xyper_images/icon-user-default.png"> 
-		</div> 
+	</nav>
+
+	<ul id="sidebar" class="side-nav fixed">
 		<li><a class="waves-effect waves-red" href="/"><i class="material-icons">home</i><span class="sidebar-text">HOME</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/popular"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/watchlist"><i class="material-icons">check</i><span class="sidebar-text">WATCHLIST</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/schedule"><i class="material-icons">schedule</i><span class="sidebar-text">SCHEDULE</span></a></li>
 		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">FAVORITES</span></a></li>
-		<li><a class="waves-effect waves-red" href="/settings"><i class="material-icons">settings</i><span class="sidebar-text">SETTINGS</span></a></li>
-		<li>
-			<a class="waves-effect waves-red" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-				<i class="material-icons">exit_to_app</i><span class="sidebar-text">LOG OUT</span> 
-			</a> 
-			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
-		</li>
 	</ul>
 	<main class="main">
 		<div class="content">

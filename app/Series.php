@@ -96,15 +96,19 @@ class Series extends Model
 	public function emptySchedule($uid){
 		$updateDate = DB::table('_schedule_uid_'. $uid)->truncate();
 	}	
-	
+	public function deleteFromSchedule($uid,$sid){
+		DB::table('_schedule_uid_'. $uid)->where('series_id','=',$sid)->delete(); 
+	}	
 	public function getSchedule($uid){
 		$schedule = DB::table('_schedule_uid_'. $uid )->get();
 		return $schedule;
 	}		
 	
 	public function getScheduleUpdateDate($uid){
-		$updateDate = DB::table('_schedule_uid_'. $uid)->select('updated')->first();
-		return $updateDate->updated;
+		if(DB::table('_schedule_uid_'. $uid)->select('updated')->first()){
+			$updateDate = DB::table('_schedule_uid_'. $uid)->select('updated')->first();
+			return $updateDate->updated;
+		}
 	}		
 	
 	

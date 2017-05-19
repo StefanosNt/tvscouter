@@ -1,8 +1,7 @@
 	<!-- Modal Structure -->
 	<div id="signup" class="modal">
 	  <div class="modal-content">
-      <h4>Sign up</h4>
-      <p>to my amazing app</p>
+      <h4 class="center">Sign up</h4> 
 		<form id="signup-form" class="col s12" method="POST" action="{{ route('register') }}">
 		{{ csrf_field() }}
 			<div class="row">
@@ -48,7 +47,7 @@
 			<div class="row">
 				<div class="col m12">
 					<p class="right-align">
-						<button id="register-btn"class="btn waves-effect waves-light" type="submit" name="action">Register</button>
+						<button id="register-btn"class="btn waves-effect waves-light red" type="submit" name="action">Register</button>
 					</p>
 				</div>
 			</div>
