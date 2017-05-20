@@ -26,9 +26,6 @@
 		</div>
 		
 		
-		<div class="center-align"><h1 class="section-title"> UPCOMING EPIOSODES </h1></div>
-		
-		
 		
 		
 	</div>	

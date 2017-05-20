@@ -175,7 +175,7 @@
       <div class="row">
         <div class="col s12 center"> 
           <h4>Contact </h4>
-          <p class="left-align light center"> For any further information or request feel free to send me an email at <b>sntokos@outlook.com</b></p>
+          <p class="left-align light center"> The development of the site is in alpha stage. For any further information or request feel free to send me an email at <b>sntokos@outlook.com</b></p>
         </div>
       </div> 
     </div>

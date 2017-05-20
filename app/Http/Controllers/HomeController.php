@@ -49,7 +49,6 @@ class HomeController extends Controller
 	 				(new SeriesController)->addToSchedule($w['series_id'],$ser,$curDate);   
 				} 
 			} 
-			
 			return view('homepage');
 			
 		}else{
