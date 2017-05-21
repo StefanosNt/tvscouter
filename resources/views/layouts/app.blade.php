@@ -41,14 +41,25 @@
 			});  
 			
 			$('#search-button').click(function(){
-				$('.search-box input').fadeIn().addClass('input-show').focus(); 
+				$('#search-box').slideDown('fast');
+				$('#search-box input').fadeIn().addClass('input-show').focus(); 
+				$('#search-results').empty();
 			});
-			$('.search-box input').on("focusout",function(){
-				$('.search-box input').val('').fadeOut().removeClass('input-show');
-				$('.search-results').removeClass('search-results-style');
-				$('.search-results').empty();
+			$('#search-box input').on("focusout",function(){
+				$('#search-box input').val('').fadeOut().removeClass('input-show');
+				$('#search-results').removeClass('search-results-style');
+				$('#search-box').fadeOut();
 			}); 
+//			$(document.body).click(function(evt){
+//  				var id = evt.target.id;	
+//				console.log(id);
+//			});
+//			$("#search-box").on('click'  , function (event) { 
+//			
+//			});
 			
+			
+
 			
 		});
         window.Laravel = {!! json_encode([
@@ -60,36 +71,32 @@
 	@yield('js')
 	
 <style>
-	.search-box{  
+	#search-box{  
 		width:80%;
 		margin:0 auto;
 	} 
-	.search-results{
-		display:none!important;
+	#search-results{ 
+		display: none;
 		width:100%;
 		margin-right: 10px;
 		overflow: auto;
 		min-height: 50px;
-		max-height: 400px; 
-		-webkit-transition: height 0.4s ease-in-out;
-		transition: height 0.4s ease-in-out;
+		max-height: 400px;  
 	}  
-	.search-results-style{
-		display: block!important;
+	.search-results-style{ 
 		background: white;
     	box-shadow: 0px 4px 11px 1px rgba(123, 109, 114, 0.47);
 	}
 	.search-content{
 		padding:5px 20px;
-		background: white;
-/*		height:80px;*/
+		background: white; 
 		margin:0!important;
 		 
 	} 
 	.loading {
 		padding:10px;
 		margin-right: 10px;
-		display:none!important;
+		display:none;
 		width:100%; 
 		background: white; 
 		transition: box-shadow .25s;
@@ -106,15 +113,13 @@
 		color: #fff!important; 
 		border-radius: 2px;
 	}
-	
-
-	
+	 
 	#search-wrapper{
-		width: 75%;
+		width: 100%;
 		top: 0;
-		height:35px;
+		height:10px;
 	} 
-	.search-box input{  
+	#search-box input{  
 		width: 0;
 	}  
 	.input-show { 
@@ -143,7 +148,7 @@
 		<a id="search-button" class="btn-floating green right">
 			<i class="material-icons" >search</i>
 		</a> 
-		<div class="search-box">  
+		<div id="search-box">  
 			<input class="search-input right" type="text" name="search" placeholder="Search for a show.." autocomplete="off">
 			<div class="loading center-align right">
 			   <div class="preloader-wrapper big active">
@@ -154,7 +159,7 @@
 				</div>
 			  </div>  
 			</div>   
-			<div class='search-results right'></div> 
+			<div id="search-results" class='right'></div> 
 		</div>
 		
 	</div>  
@@ -193,30 +198,30 @@
 	$(document).ready(function(){
 		
 		$(".search-input").keyup(function(e) {
-			$('.search-results').removeClass('search-results-style');
+			$('#search-results').removeClass('search-results-style');
 
 			var inputVal = $('.search-input').val();
 			
-			$('.search-results').html('');
-			$(".loading").attr( "style", "display: block !important;" );
-//			$('.search-results').html('');
+			$('#search-results').html('');
+			$(".loading").show();
+//			$('#search-results').html('');
 			clearTimeout($.data(this, 'timer'));
 			console.log(inputVal);
 			if ($('.search-input').val()==""){
-				$('.search-results').html('');
-				$(".loading").attr( "style", "display: none !important;" );
+				$('#search-results').html('');
+				$(".loading").hide();
 			}
 			if (e.keyCode == 13){
 				getData();
 			}
 			else if(e.keyCode == 8){
 				if(inputVal ==""){
-					$(".loading").attr( "style", "display: none !important;" );
+					$(".loading").hide();
 				}
 				else{
-					$(".loading").attr( "style", "display: block !important;" );
+					$(".loading").show();
 				}
-				$('.search-results').html('');
+				$('#search-results').html('');
 				$(this).data('timer', setTimeout(getData, 500)); 
 			}
 			else{
@@ -225,8 +230,8 @@
 			 
 		}); 
 		function getData(){
-			$('.search-results').html('');
-			$('.search-results').slideDown("fast");
+			$('#search-results').html('');
+			$('#search-results').slideDown("fast");
 			$.ajax({
 				async:false,
 				method:'GET',
@@ -235,18 +240,18 @@
 					console.log(res);
 					if(res.results.length===0){
 						console.log("No record found");
-						$(".loading").attr( "style", "display: none !important;" );
-						$('.search-results').addClass('search-results-style').append('<p style="text-align:center"> No record found</p>');
+						$(".loading").hide();
+						$('#search-results').addClass('search-results-style').append('<p style="text-align:center"> No record found</p>');
 					}
 					$.each(res.results, function(i,ser){ 
-						$(".loading").attr( "style", "display: none !important;" );
+						$(".loading").hide();
 						var name = ser.name;
 						var id = ser.id;
 						var airdate = ser.first_air_date;
 						var poster = 'https://image.tmdb.org/t/p/w185'+ser.poster_path;
 						if(ser.poster_path===null)	poster="http://placehold.it/185x278?text=NO+POSTER"
-						$('.search-results').addClass('search-results-style');
-						$('.search-results').append(
+						$('#search-results').addClass('search-results-style');
+						$('#search-results').append(
 							'<div class="card horizontal search-content">'+
 								'<div class="card-image">'+
 									'<img src="'+poster+'">'+
@@ -254,8 +259,10 @@
 								'</div>'+
 								'<div class="card-stacked">'+
 									'<div class="card-content">'+
-										'<a href="/tv/'+id+'">'+name+'</a>'+ 
+										'<a href="/tv/'+id+'">'+
+										'<p>'+name+'</p>'+
 										'<p style="color:#8b8b8b">'+airdate+'</p>'+
+										'</a>'+ 
 //										'<span class="status badge green">WATCHING</span>'+
 									'</div>'+
 								'</div>'+

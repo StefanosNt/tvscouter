@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+	public function getTotalMinutes($uid){
+		return DB::table('users')->where('id', $uid)->value('minutes_watched');
+	}
+	public function addTotalMinutes($totalSeriesMinutes,$uid){ 
+		$minutesWatched = DB::table('users')->where('id', $uid)->value('minutes_watched');
+		DB::table('users')->where('id', $uid)->update(['minutes_watched' => $minutesWatched + $totalSeriesMinutes]);
+	}
+	public function subtractTotalMinutes($totalSeriesMinutes,$uid){ 
+		$minutesWatched = DB::table('users')->where('id', $uid)->value('minutes_watched');
+		DB::table('users')->where('id', $uid)->update(['minutes_watched' => $minutesWatched - $totalSeriesMinutes]);
+	}
 }

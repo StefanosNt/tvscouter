@@ -164,7 +164,7 @@
 						async:false,
 						method:'POST',
 						url:'/tv/{{$series['id']}}',
-						data:{"uid" : {{ Auth::user()->id }} , "sid" : {{$series['id']}} , "sname" : "{{$series['name']}}" , "sposter" : "{{$series['poster_path']}}"  },
+						data:{"uid" : {{ Auth::user()->id }} , "sid" : {{$series['id']}} , "sname" : "{{$series['name']}}" , "sposter" : "{{$series['poster_path']}}", "totalSeriesMinutes" : {{$series['total_series_minutes']}} },
 						success: function(s){
 							console.log(s);
 						}

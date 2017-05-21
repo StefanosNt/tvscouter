@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth; 
 use GuzzleHttp\Client; 
 use App\Series;
+use App\User;
 use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
@@ -52,12 +53,14 @@ class SeriesController extends Controller
 			]
 		]);
 
-		$series = json_decode($series->getBody(),true);
-
+		$series = json_decode($series->getBody(),true); 		 
+		$series['total_series_minutes'] = $series['number_of_episodes']*$series['episode_run_time'][0]; 
+		
 //		return dd($series);
 //		return view('tv-series',compact('series'));
 		return $series;
 	}
+	
 	public function getSeason($id,$season){
 
 
@@ -104,15 +107,20 @@ class SeriesController extends Controller
 
 		$series = self::getSeries($id);
 		$totalSeasons = $series['number_of_seasons'];
-
+//		$totalEpisodes = 0;  
+		
 		for($i = 1 ; $i <= $totalSeasons ; $i++){
 			$seasons = $seasons. "season/$i,";
-		}
-//		return $seasons;
-
+		} 
 		$seasons = $client->request('GET', "https://api.themoviedb.org/3/tv/$id?api_key=5356352546e70dce6c10c8c67d5e0604&append_to_response=". $seasons,['verify' => FALSE ]);
 		$seasons=json_decode($seasons->getBody(),true);
-//		echo dd($serie
+		
+//		for($i = 1 ; $i <= $totalSeasons ; $i++){
+//			$totalEpisodes += count($seasons["season/$i"]['episodes']);
+//		}
+//		
+//		$seasons['total_series_minutes'] = $totalEpisodes*$series['episode_run_time'][0];
+		
 		return $seasons;
 
 
@@ -159,15 +167,19 @@ class SeriesController extends Controller
 	
 	public function editWatchlist (Request $request) {
 		$ser = new Series; 
+		$user = new User;
 		if($ser->isWatching($request->get('uid'),$request->get('sid'))==0){
 			$ser->insertIntoWatchlist($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
 			$curDate = date('Y-m-d');   
 			self::addToSchedule($request->get('sid'),$ser,$curDate);
-			return 'added';
+			$user->addTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
+			return "added";
 		}
 		else{
 			$ser->deleteFromWatchlist($request->get('uid'),$request->get('sid'));
 			$ser->deleteFromSchedule($request->get('uid'),$request->get('sid'));
+			$user->subtractTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
+
 			return 'deleted';
 		} 
 		
@@ -185,11 +197,13 @@ class SeriesController extends Controller
  		$schedule = json_decode($ser->getSchedule(Auth::user()->id),true);
 		return view('series.schedule',compact('schedule'));   
 	}
+	
 	public function addToSchedule($sid,$ser,$curDate){
 		$series= self::getAllSeasons($sid); 
-		$curSeason = $series['number_of_seasons'];
-//		return $series;
+		$curSeason = $series['number_of_seasons']; 
+		
 		if($series['status']!=="Canceled" && $series['status']!=="Ended"){   
+			
 			foreach ($series['season/'. $curSeason]['episodes'] as $episodes){
 
 				if ($curDate <= $episodes['air_date']) {
@@ -212,26 +226,19 @@ class SeriesController extends Controller
 			}
 		} 
 	}
+	
+	public function timpeSpent($sid){
+		
+		
+		
+	}
 	 
 	public function ss(){ 
-		 
-		$curDate = date('Y-m-d',strtotime(date('Y-m-d')));
-		$date = date('Y-m-d',strtotime('2017-05-11'));
+		$user = new User;
+		return $user->subtractTotalMinutes(22,7);
+//		$ser = self::getSeries(46896);
+//		return $ser['episode_run_time'][0]; 
 		
-		$epYear = date('Y',strtotime($date));
-		$epMonth = date('m',strtotime($date));
-		$epDay = date('d',strtotime($date));
-		
-		$yearDiff = date('Y',strtotime($date)) - date('Y',strtotime($curDate)); //must be >=0
-		$monthDiff = date('m',strtotime($date)) - date('m',strtotime($curDate)); // must be >=0
-		$dayDiff = date('d',strtotime($date)) - date('d',strtotime($curDate)); 
-		
-//		if($curDate > $date){
-//			echo $date. '<br>'. $curDate; 
-//		}
-//		return '<br>'. $yearDiff. '<br>'. $monthDiff. '<br>'. $dayDiff ;
-		return view('series.test',compact('date','yearDiff','monthDiff','epYear','epMonth','epDay'));
-//		return dd(self::getSeries(60735));
 	}
 	
 	public function sss(){

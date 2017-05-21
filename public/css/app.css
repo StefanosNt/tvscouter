@@ -2,8 +2,7 @@ html,
 body,
 main {
 	height: 100%;
-}
-
+} 
 main {
 	padding-left: 158px;
 /*	padding-top: 55px;*/
@@ -13,7 +12,8 @@ main {
 .pl50{padding-left:50px!important}
 .zero-padding{
 	padding-left:0;
-}
+} 
+
 #navbar {
 /*	height: 55px;*/
 /*	line-height: 55px;*/
@@ -247,8 +247,8 @@ main {
 .stars-100:after {
 	width: 100;
 }
-.pop-img {}
-
+.pop-img {width: 300px}
+.popular{ color:aquamarine}
 .card-title a {
 	color: #686f73;
 	font-size: 20px;
@@ -311,7 +311,7 @@ main {
 @media (max-width: 600px) {
 	/* Small */
 	main {
-		padding-left: 0;
+		padding-left: 0!important;
 	}
 	#sidebar {
 		z-index: 999;
@@ -321,9 +321,18 @@ main {
 		transform: translateX(0%) !important;
 */
 	}
+	
+	#user { display: block!important; }
+	#sidebar { width: 158px!important; }  
+	.sidebar-text { display: inline!important }	
+	.pl50{padding-left: 0!important;} 
+	
 	.series-poster-block{margin:0 auto; padding-top: 30px; float: none;}
 	.series-poster-wrapper { height: 350px; } 
 	.title-block { margin-top:100px; text-align: center;}
+	 
+	#search-box{width:70%!important} 
+	
 }
 
 @media (min-width: 993px) and (max-width: 1200px) {
