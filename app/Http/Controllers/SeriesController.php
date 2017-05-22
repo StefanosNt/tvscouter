@@ -18,29 +18,45 @@ class SeriesController extends Controller
 
 		return view('homepage');
 	}
-    public function popular() {
+    public function getSection($category,$page) {
+		if($page>10) return "No results";
 		//full url
 		//https://api.themoviedb.org/3/tv/popular?api_key=5356352546e70dce6c10c8c67d5e0604&language=en-US&page=1
 		$client = new Client();
-		$category = '/tv/popular';
-		$url = self::$baseURL. $category ;
+//		$category = '/tv/popular';
+		$url = self::$baseURL.'/tv/'. $category ;
 
         $res = $client->request('GET', $url,[
 			'verify' => FALSE,
 			'form_params' => [
-				'page' => '1',
-				'language' => 'en-US',
+				'page' => $page, 
 				'api_key' => self::$apiKey
  			]
 		]);
 
-		$popular = json_decode($res->getBody(),true);
-		$popular = $popular['results'];
+		$section = json_decode($res->getBody(),true);
+		$section = $section['results'];
 //		return $popular[1];
 //		return dd($popular);
-		return view('series.popular',compact('popular'));
+		return view('series.section',compact('section','category'));
 
 	}
+	
+	public function getTop10($category){ 
+		$client = new Client(); 
+		$url = self::$baseURL.'/tv/'. $category ; 
+        $res = $client->request('GET', $url,[
+			'verify' => FALSE,
+			'form_params' => [
+				'page' => 1, 
+				'api_key' => self::$apiKey
+ 			]
+		]); 
+		$section = json_decode($res->getBody(),true)['results'];
+		for($i=0;$i<10;$i++){ $top10[] = $section[$i]; }
+		return $top10;
+	}
+	
 	public function getSeries($id){
 		$client = new Client();
 		$category = '/tv/'. $id;

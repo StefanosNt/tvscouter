@@ -17,9 +17,13 @@
 	.content,#index-banner{
 		height:100%;
 	}
+	#features i {
+		color: orangered;
+		font-size: 9rem;
+	}
 	i { 
-		color: orangered; 
-		font-size: 6rem!important;
+		color: white; 
+/*		font-size: 1rem!important;*/
 	}
 	p {
 	  	line-height: 2rem;
@@ -73,6 +77,8 @@
 	}
 	#contact-container{
 		height:100%;
+		max-height:400px;
+
 	}
 	#contact{
 		background-color:white;
@@ -93,7 +99,11 @@
 	@media only screen and (max-width : 600px) {
 	  #index-banner .section {
 		top: 0;
+		  
 	  }
+	  #index-banner h1{
+	  	font-size:5rem;
+
 	}
 
 	.icon-block {
@@ -111,7 +121,7 @@
     <div id="home" class="section no-pad-bot scrollspy">
       <div class="container">
         <br><br>
-        <h1 class="header center white-text text-lighten-2">TVScout</h1>
+        <h1 class="header center white-text text-lighten-2">TVScouter</h1>
         <div class="row center">
           <h5 class="header col s12 light"> The place to track all your series instantly and effectively. Just some clicks away!</h5>
         </div> 
@@ -132,7 +142,7 @@
             <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
             <h5 class="center">TV Schedule</h5>
 
-            <p class="light">By adding TV shows into your watchlist TVScout automatically makes up your TV schedule so that you can always know when any episode of your watchlist is airing.</p>
+            <p class="light">By adding TV shows into your watchlist TVScouter automatically makes up your TV schedule so that you can always know when any episode of your watchlist is airing.</p>
           </div>
         </div>
 
@@ -160,13 +170,7 @@
 
 
   <div class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-      <div id="networks-container"class="container">
-        <div class="row center">
-          <h5 class="header col s12 light">Series from all your favorite channels</h5>
-        </div>
-      </div>
-    </div>
+ 
     <div class="parallax"><img id="networks" src="{{ URL::asset('photos/asset1.jpg') }}" alt="Unsplashed background img 2"></div>
   </div>  
 

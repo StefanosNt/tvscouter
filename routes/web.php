@@ -16,7 +16,7 @@
 Auth::routes();
 
 Route::GET('/', 'HomeController@index')->name('landing');
-Route::GET('/tv/popular', 'SeriesController@popular')->middleware('auth');
+Route::GET('/tv/{category}/{page}', 'SeriesController@getSection')->middleware('auth');
 Route::GET('/tv/schedule', 'SeriesController@schedule')->middleware('auth');
 Route::GET('/tv/watchlist', 'SeriesController@watchlist')->middleware('auth');
 Route::GET('/settings', 'UserController@settings')->middleware('auth');
@@ -33,7 +33,7 @@ Route::GET('/watchliststate','SeriesController@watchlistState');
 //Route::DELETE('/tv/{id}','SeriesController@removeFromWatchlist'); 
 
 Route::GET('/usertables','SeriesController@checkWatchlistTableState');
-
+ROute::GET('/{category}/top5','SeriesController@getTop5');
 
 //TESTING
 

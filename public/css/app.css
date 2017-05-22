@@ -9,7 +9,9 @@ main {
 }
 .l23{left: 23px!important}
 .w50{width: 50px!important}
-.pl50{padding-left:50px!important}
+.pl50{padding-left: 50px!important}
+.mb30{margin-bottom:30px;}
+.fw200{font-weight: 200;}
 .zero-padding{
 	padding-left:0;
 } 
@@ -247,8 +249,16 @@ main {
 .stars-100:after {
 	width: 100;
 }
-.pop-img {width: 300px}
-.popular{ color:aquamarine}
+.pop-img {
+/*	width: 300px*/
+/*
+	height: 30%;
+    width: 50%;
+*/
+} 
+.tv-section{
+	color: red;
+}
 .card-title a {
 	color: #686f73;
 	font-size: 20px;
@@ -256,6 +266,8 @@ main {
 .pop-body {
 	height: 80px;
 	padding: 10px!important;
+		overflow: hidden;
+
 } 
 .compressed a { 
 	padding-left: 15px!important; 
@@ -285,8 +297,33 @@ main {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(255,0,0,0.4); 
-}
-@media (min-width: 600px) and (max-width: 992px) {
+} 
+@media (max-width: 600px) {
+	/* Small */
+	main {
+		padding-left: 0!important;
+	}
+	#sidebar {
+		z-index: 999;
+/*
+		display: none;
+		-webkit-transform: translateX(0%) !important;
+		transform: translateX(0%) !important;
+*/
+	}
+	
+	#user { display: block!important; }
+	#sidebar { width: 158px!important; }  
+	#search-box{width:70%!important} 
+
+	.sidebar-text { display: inline!important }	
+	.pl50{padding-left: 0!important;}  
+	.series-poster-block{margin:0 auto; padding-top: 30px; float: none;}
+	.series-poster-wrapper { height: 350px; } 
+	.title-block { margin-top:100px; text-align: center;} 
+	
+} 
+@media (min-width: 601px) and (max-width: 992px) {
 	/* Μedium*/
 	#sidebar {
 		-webkit-transform: translateX(0%) !important;
@@ -307,40 +344,12 @@ main {
 	main { padding-left: 50px }
 */
 }
-
-@media (max-width: 600px) {
-	/* Small */
-	main {
-		padding-left: 0!important;
-	}
-	#sidebar {
-		z-index: 999;
-/*
-		display: none;
-		-webkit-transform: translateX(0%) !important;
-		transform: translateX(0%) !important;
-*/
-	}
-	
-	#user { display: block!important; }
-	#sidebar { width: 158px!important; }  
-	.sidebar-text { display: inline!important }	
-	.pl50{padding-left: 0!important;} 
-	
-	.series-poster-block{margin:0 auto; padding-top: 30px; float: none;}
-	.series-poster-wrapper { height: 350px; } 
-	.title-block { margin-top:100px; text-align: center;}
-	 
-	#search-box{width:70%!important} 
-	
-}
-
 @media (min-width: 993px) and (max-width: 1200px) {
 	/* Large */
 }
 
 @media (min-width: 1201px) {
-	/* Large */
+	/* extra Large */
 }
 
 

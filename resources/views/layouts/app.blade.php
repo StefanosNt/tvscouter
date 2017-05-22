@@ -21,6 +21,8 @@
 			
 			$('.modal').modal();
 			$(".button-collapse").sideNav(); 
+			$('.carousel').carousel();
+
 			
 			$('#expand-toggle').click(function(){
 				if(i%2==0){ 
@@ -170,10 +172,10 @@
 		  <img class="circle" src="http://www.imran.com/xyper_images/icon-user-default.png"> 
 		</div> 
 		<li><a class="waves-effect waves-red" href="/"><i class="material-icons">home</i><span class="sidebar-text">HOME</span></a></li>
-		<li><a class="waves-effect waves-red" href="/tv/popular"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/watchlist"><i class="material-icons">check</i><span class="sidebar-text">WATCHLIST</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/schedule"><i class="material-icons">schedule</i><span class="sidebar-text">SCHEDULE</span></a></li>
-		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">FAVORITES</span></a></li>
+		<li><a class="waves-effect waves-red" href="/tv/popular/1"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
+		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">TOP RATED</span></a></li>
 		<li><a class="waves-effect waves-red" href="/settings"><i class="material-icons">settings</i><span class="sidebar-text">SETTINGS</span></a></li>
 		<li>
 			<a class="waves-effect waves-red" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -188,9 +190,6 @@
 		</div>
 
 	</main>
-
-	@extends('auth/login')
-	@extends('auth/register')
 
 </body>
 

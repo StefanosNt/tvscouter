@@ -31,8 +31,10 @@ class HomeController extends Controller
 //		The tables are of form : _watchlist_uid_{id} , _schedule_uid_{id}
 		
 		if(Auth::check()){   
+			$serController = new SeriesController;
 			$ser = new Series;
 			$user = new User;
+			
 			if(!Schema::hasTable('_watchlist_uid_'. Auth::user()->id) ){ 
 				$ser->createWatchlistTable( Auth::user()->id ); 
 			} 			
@@ -47,7 +49,7 @@ class HomeController extends Controller
 			
 				$ser->emptySchedule(Auth::user()->id); 
 				foreach($watchlist as $w){ 
-	 				(new SeriesController)->addToSchedule($w['series_id'],$ser,$curDate);   
+	 				$serController->addToSchedule($w['series_id'],$ser,$curDate);   
 				} 
 			}
 			
@@ -63,8 +65,10 @@ class HomeController extends Controller
 			$hours -= $months * 24 * 7 * 4;
 			$days = floor($hours / 24);
 			$hours -= $days * 24;
- 
-			return view('homepage',compact('totalHours','years','months','days','hours'));
+ 			
+			$popular = $serController->getTop10('popular');
+			$topRated = $serController->getTop10('top_rated'); 
+			return view('homepage',compact('totalHours','years','months','days','hours','popular','topRated'));
 			
 		}else{
 			return view('landing-page');

@@ -33,10 +33,7 @@
 		  	  <span class="card-title"> <a href="/tv/{{$v['series_id']}}"> {{$v['series_name']}} </a> </span>
 			  <p class='air-date'>{{$v['air_date']}}</p>
 			  <p class='ep-details'>Season {{$v['season_number']}} Episode {{$v['episode_number']}} - {{$v['episode_name']}}</p>
-			</div>
-			<div class="card-action">
-			  <a href="#">This is a link</a>
-			</div>
+			</div> 
 		  </div>
 		</div>
 	  </div>
