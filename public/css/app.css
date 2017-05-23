@@ -71,15 +71,15 @@ main {
 }
 #sidebar-toggle a:hover{
 	box-shadow: 0 0 0;
-} 
-#user{ 
-	margin: 5px 0 5px 0;
-	text-align: center; 
-} 
-#user img {
-	margin-top: 10px;
-	width: 100px;
-	height: 100px;
+}  
+#user-img {
+	margin-top: 10px; 
+    width: 100px;
+    padding:0;
+    margin:0 auto;
+}
+#user-name a{
+  background:inherit;
 }
 #logo {
 	padding-left: 20px;
@@ -312,7 +312,7 @@ main {
 */
 	}
 	
-	#user { display: block!important; }
+	#user-img { display: block!important; }
 	#sidebar { width: 158px!important; }  
 	#search-box{width:70%!important} 
 

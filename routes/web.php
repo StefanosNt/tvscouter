@@ -16,7 +16,7 @@
 Auth::routes();
 
 Route::GET('/', 'HomeController@index')->name('landing');
-Route::GET('/tv/{category}/{page}', 'SeriesController@getSection')->middleware('auth');
+Route::GET('/tv/category={category}&page={page}', 'SeriesController@getSection')->middleware('auth');
 Route::GET('/tv/schedule', 'SeriesController@schedule')->middleware('auth');
 Route::GET('/tv/watchlist', 'SeriesController@watchlist')->middleware('auth');
 Route::GET('/settings', 'UserController@settings')->middleware('auth');

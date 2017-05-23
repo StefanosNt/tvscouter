@@ -29,14 +29,16 @@
 					$('#expand-toggle').removeClass('expanded').addClass('compressed')
 					$('#sidebar').addClass('w50');
 					$('main').addClass('pl50'); 
-					$('#user').hide();
+					$('#user-name').hide();
+					$('#user-img').hide();
 					$('.sidebar-text').hide();
 					i++;
 				}else{ 
 					$('#expand-toggle').removeClass('compressed').addClass('expanded')
 					$('#sidebar').removeClass('w50');
 					$('main').removeClass('pl50'); 
-					$('#user').show();
+					$('#user-name').show();
+					$('#user-img').show();
 					$('.sidebar-text').show();
 					i++;
 				}
@@ -167,15 +169,15 @@
 	</div>  
 	<ul id="sidebar" class="side-nav fixed red"> 
 		<li id="expand-toggle" class="expanded waves-effect waves-red hide-on-small-only"><a><i class="fa fa-expand" aria-hidden="true"></i></a></li>
-		<div id="user">
-		  <a href="/settings"><span class="white-text name">{{ Auth::user()->name }}</span></a>
-		  <img class="circle" src="http://www.imran.com/xyper_images/icon-user-default.png"> 
-		</div> 
+
+        <li id="user-name"> <a href="/settings" class="white-text center"> {{ Auth::user()->name }}</a> </li>
+		<li id="user-img"> <img class="circle" src="http://www.imran.com/xyper_images/icon-user-default.png" width="100px"> </li>
+		
 		<li><a class="waves-effect waves-red" href="/"><i class="material-icons">home</i><span class="sidebar-text">HOME</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/watchlist"><i class="material-icons">check</i><span class="sidebar-text">WATCHLIST</span></a></li>
 		<li><a class="waves-effect waves-red" href="/tv/schedule"><i class="material-icons">schedule</i><span class="sidebar-text">SCHEDULE</span></a></li>
-		<li><a class="waves-effect waves-red" href="/tv/popular/1"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
-		<li><a class="waves-effect waves-red" href="/favorites"><i class="material-icons">favorite</i><span class="sidebar-text">TOP RATED</span></a></li>
+		<li><a class="waves-effect waves-red" href="/tv/category=popular&page=1"><i class="material-icons">trending_up</i><span class="sidebar-text">POPULAR</span></a></li>
+		<li><a class="waves-effect waves-red" href="/tv/category=top_rated&page=1"><i class="material-icons">favorite</i><span class="sidebar-text">TOP RATED</span></a></li>
 		<li><a class="waves-effect waves-red" href="/settings"><i class="material-icons">settings</i><span class="sidebar-text">SETTINGS</span></a></li>
 		<li>
 			<a class="waves-effect waves-red" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
