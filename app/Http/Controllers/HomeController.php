@@ -10,55 +10,43 @@ use App\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-//        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-//		On homepage call check if user specific tables exist. If not create them.
-//		The tables are of form : _watchlist_uid_{id} , _schedule_uid_{id}
+ 
+    public function __construct() {
 		
-		if(Auth::check()){   
-			$serController = new SeriesController;
-			$ser = new Series;
-			$user = new User;
+		$this->serController = new SeriesController;
+		$this->ser = new Series;
+		$this->user = new User;
+    
+	} 
+	
+    public function index() {
+		
+		/*		On homepage call check if user specific tables exist. If not create them.
+				The tables are of form : _watchlist_uid_{id} , _schedule_uid_{id}			*/
+																					
+		if(Auth::check()){    
 			
 			if(!Schema::hasTable('_watchlist_uid_'. Auth::user()->id) ){ 
-				$ser->createWatchlistTable( Auth::user()->id ); 
+				$this->ser->createWatchlistTable( Auth::user()->id ); 
 			} 			
 			if(!Schema::hasTable('_schedule_uid_'. Auth::user()->id) ){ 
-				$ser->createScheduleTable( Auth::user()->id ); 
+				$this->ser->createScheduleTable( Auth::user()->id ); 
 			}   
 			
 			$curDate = date('Y-m-d'); 
-			$updated = $ser->getScheduleUpdateDate(Auth::user()->id);
+			$updated = $this->ser->getScheduleUpdateDate(Auth::user()->id);
 			$watchlist = json_decode(DB::table('_watchlist_uid_'.Auth::user()->id)->get(),true);
 			if(strtotime($updated)-strtotime($curDate)>0){
 			
-				$ser->emptySchedule(Auth::user()->id); 
+				$this->ser->emptySchedule(Auth::user()->id); 
 				foreach($watchlist as $w){ 
-	 				$serController->addToSchedule($w['series_id'],$ser,$curDate);   
+	 				$this->serController->addToSchedule($w['series_id'],$this->ser,$curDate);   
 				} 
 			}
+			  
+			$totalHours = floor($this->user->getTotalMinutes(Auth::user()->id)/60); 
 			
-			foreach($watchlist as $w){ 
-//				(new SeriesController)->addToSchedule($w['series_id'],$ser,$curDate);   
-			} 
-			$totalHours = floor($user->getTotalMinutes(Auth::user()->id)/60); 
 			$hours = $totalHours;
-			
 			$years = floor($hours / (24*7*4*12));
 			$hours -= $years * 24 * 7 * 4 * 12;
 			$months = floor($hours / (24*7*4));
@@ -66,8 +54,9 @@ class HomeController extends Controller
 			$days = floor($hours / 24);
 			$hours -= $days * 24;
  			
-			$popular = $serController->getTop10('popular');
-			$topRated = $serController->getTop10('top_rated'); 
+			$popular = $this->serController->getSection('popular',10);
+			$topRated = $this->serController->getSection('top_rated',10); 
+			
 			return view('homepage',compact('totalHours','years','months','days','hours','popular','topRated'));
 			
 		}else{

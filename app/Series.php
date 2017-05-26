@@ -31,6 +31,7 @@ class Series extends Model
 		});
 	
 	}
+	
 	public function createScheduleTable($uid){
 		
 		Schema::create('_schedule_uid_'. $uid, function(Blueprint $table){
@@ -46,8 +47,6 @@ class Series extends Model
 			$table->text('episode_overview');	 
 			$table->date('air_date');			 
 			$table->date('updated');		 
-			
-			
 		});
 	
 	}
@@ -63,19 +62,29 @@ class Series extends Model
 	}	
 	
 	public function deleteFromWatchlist($uid,$sid){
-		DB::table('_watchlist_uid_'. $uid)->where('series_id','=',$sid)->delete(); 
+		
+		DB::table('_watchlist_uid_'. $uid)
+			->where('series_id','=',$sid)
+			->delete(); 
+		
 	}
 	
 	public function isWatching($uid,$sid){
-		return DB::table('_watchlist_uid_'. $uid )->where('series_id', '=', $sid)->count();
+		
+		return DB::table('_watchlist_uid_'. $uid )
+			->where('series_id', '=', $sid)
+			->count();
+		
 	}
 	
 	public function getWatchlist($uid){
-		$watchlist = DB::table('_watchlist_uid_'. $uid )->get();
-		return $watchlist;
+		
+		return DB::table('_watchlist_uid_'. $uid )->get();
+		 
 	}
 	
 	public function insertIntoSchedule($uid,$arr){
+		
 		DB::table('_schedule_uid_'. $uid)->insert(
 			[
 				'series_id' 		=> $arr['sid'], 
@@ -91,31 +100,39 @@ class Series extends Model
 				'updated'			=> date('Y-m-d') 
 			]
 		);
+		
 	}	
 	
 	public function emptySchedule($uid){
+		
 		$updateDate = DB::table('_schedule_uid_'. $uid)->truncate();
+		
 	}	
+	
 	public function deleteFromSchedule($uid,$sid){
-		DB::table('_schedule_uid_'. $uid)->where('series_id','=',$sid)->delete(); 
+		
+		DB::table('_schedule_uid_'. $uid)
+			->where('series_id','=',$sid)
+			->delete();
+		
 	}	
+	
 	public function getSchedule($uid){
-		$schedule = DB::table('_schedule_uid_'. $uid )->get();
-		return $schedule;
+		
+		return DB::table('_schedule_uid_'. $uid )->get();  
+		
 	}		
 	
 	public function getScheduleUpdateDate($uid){
+		
 		if(DB::table('_schedule_uid_'. $uid)->select('updated')->first()){
-			$updateDate = DB::table('_schedule_uid_'. $uid)->select('updated')->first();
-			return $updateDate->updated;
+			
+			return DB::table('_schedule_uid_'. $uid)
+				->select('updated')
+				->first()
+				->updated; 
 		}
+		
 	}		
-	
-	
-	
-	
-	
-	
-	
 	
 }

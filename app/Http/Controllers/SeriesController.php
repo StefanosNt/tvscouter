@@ -13,208 +13,188 @@ class SeriesController extends Controller
 {
 	public static $baseURL = 'https://api.themoviedb.org/3';
 	public static $apiKey = '5356352546e70dce6c10c8c67d5e0604';
+	
+	public function __construct(){
+		
+		/*	Initialization of controllers and default params	*/
+		
+		$this->client 	=	new Client;
+		$this->user		= 	new User;
+		$this->ser 		= 	new Series;
+		
+		$this->form_params['page'] 		= 1;
+		$this->form_params['api_key'] 	= self::$apiKey;
+		$this->form_params['language'] 	= 'en-us';
+		
+		$this->params['verify'] = FALSE;
+		$this->params['form_params'] = $this->form_params; 
 
-	public function index(){
+	} 		
 
-		return view('homepage');
-	}
-    public function getSection($category,$page) {
-		if($page>10) return "No results";
-		//full url
-		//https://api.themoviedb.org/3/tv/popular?api_key=5356352546e70dce6c10c8c67d5e0604&language=en-US&page=1
-		$client = new Client();
-//		$category = '/tv/popular';
-		$url = self::$baseURL.'/tv/'. $category ;
+    public function showSection($category,$page) {
+		
+		/*	Returns different view depending on category. Category can either be 'popular' or 'top_rated'	*/
 
-        $res = $client->request('GET', $url,[
-			'verify' => FALSE,
-			'form_params' => [
-				'page' => $page, 
-				'api_key' => self::$apiKey
- 			]
-		]);
-
+		if($page>10) return "No results";  
+		
+		$url = self::$baseURL.'/tv/'. $category ; 
+		 
+		$this->form_params['page'] = $page;
+		$this->params['form_params'] = $this->form_params; 
+ 
+        $res = $this->client->request('GET', $url, $this->params); 
+		
 		$section = json_decode($res->getBody(),true);
-		$section = $section['results'];
-//		return $popular[1];
-//		return dd($popular);
+		$section = $section['results']; 
+		
 		return view('series.section',compact('section','category'));
 
 	}
 	
-	public function getTop10($category){ 
-		$client = new Client(); 
-		$url = self::$baseURL.'/tv/'. $category ; 
-        $res = $client->request('GET', $url,[
-			'verify' => FALSE,
-			'form_params' => [
-				'page' => 1, 
-				'api_key' => self::$apiKey
- 			]
-		]); 
-		$section = json_decode($res->getBody(),true)['results'];
-		for($i=0;$i<10;$i++){ $top10[] = $section[$i]; }
-		return $top10;
-	}
+	public function getSection($category,$items){ 
 	
-	public function getSeries($id){
-		$client = new Client();
-		$category = '/tv/'. $id;
-		$url = self::$baseURL. $category;
-		$series = $client->request('GET', $url,[
-			'verify' => FALSE,
-			'form_params' => [
-				'api_key' => self::$apiKey,
-				'language' => 'en-US'
-			]
-		]);
-
-		$series = json_decode($series->getBody(),true); 		 
-		$series['total_series_minutes'] = $series['number_of_episodes']*$series['episode_run_time'][0]; 
+		/*	Returns a certain number of given category elements	 */
 		
-//		return dd($series);
-//		return view('tv-series',compact('series'));
-		return $series;
+		$url = self::$baseURL.'/tv/'. $category ; 
+		
+        $res = $this->client->request('GET', $url, $this->params); 
+		
+		$section = json_decode($res->getBody(),true)['results'];
+		
+		for($i=0;$i<$items;$i++){ $top[] = $section[$i]; }
+		
+		return $top;
+		
 	}
 	
-	public function getSeason($id,$season){
+	public function getSeries($id){ 
+		
+		/*	Returns a series array of given id with an added index of total series runtime	*/
+		
+		$url = self::$baseURL. '/tv/'. $id;
+		
+		$series = $this->client->request('GET', $url, $this->params); 
+		$series = json_decode($series->getBody(),true); 		 
+		$series['total_series_minutes'] = $series['number_of_episodes']*$series['episode_run_time'][0];  
+		
+		return $series;
+		
+	}
+	
+	public function getSeason($id,$season){ 
+		
+		/*	Returns an array consisting of details and episode list of a given series id	*/
+		
+		$url = self::$baseURL. '/tv/'. $id. '/season/'. $season ;
 
-
-//		https://api.themoviedb.org/3/tv/1402/season/1?api_key=5356352546e70dce6c10c8c67d5e0604&language=en-US&append_to_response=%20
-		$client = new Client();
-		$category = '/tv/'. $id. '/season/'. $season;
-		$url = self::$baseURL. $category;
-
-		$season = $client->request('GET', $url,[
-			'verify' => FALSE,
-			'form_params' => [
-				'api_key' => self::$apiKey,
-				'language' => 'en-US'
-			]
-		]);
-
+		$season = $this->client->request('GET', $url, $this->params); 
 		$season=json_decode($season->getBody(),true);
-//		return dd($season);
-		return $season;
+		
+ 		return $season;
 
 	}
+	
 	public function showSeries($id){
-
+		
+		/*	Renders the tv-series view . By default on load the view shows the details of the furst season.
+			Using ajax the getALlSeasons is called if the users decides to see details of another season 	*/
+		
 		$seasonNumber = 1;
 		$series = self::getSeries($id);
 		$season = self::getSeason($id,1);
-//		return dd($series);
-		return view('series.tv-series',compact('series','season','seasonNumber'));
+		
+ 		return view('series.tv-series',compact('series','season','seasonNumber'));
 
-	}
-//	public function showSeriesSeason($id,$season){
-//
-//		$seasonNumber = $season;
-//		$series = self::getSeries($id);
-//		$season = self::getSeason($id,$season);
-//		return view('tv-series',compact('series','season','seasonNumber'));
-//	}
+	} 
 
-	public function getAllSeasons($id){
-		$client = new Client();
-		$category = '/tv/'. $id;
-		$url = self::$baseURL. $category;
-		$seasons = "";
-
+	public function getAllSeasons($id){ 
+		  
+		/*	This function is called from inside a view to ajax the results of it	*/
+		
 		$series = self::getSeries($id);
-		$totalSeasons = $series['number_of_seasons'];
-//		$totalEpisodes = 0;  
+				
+		$seasons = ""; 
+		$totalSeasons = $series['number_of_seasons']; 
 		
 		for($i = 1 ; $i <= $totalSeasons ; $i++){
 			$seasons = $seasons. "season/$i,";
 		} 
-		$seasons = $client->request('GET', "https://api.themoviedb.org/3/tv/$id?api_key=5356352546e70dce6c10c8c67d5e0604&append_to_response=". $seasons,['verify' => FALSE ]);
-		$seasons=json_decode($seasons->getBody(),true);
 		
-//		for($i = 1 ; $i <= $totalSeasons ; $i++){
-//			$totalEpisodes += count($seasons["season/$i"]['episodes']);
-//		}
-//		
-//		$seasons['total_series_minutes'] = $totalEpisodes*$series['episode_run_time'][0];
+		$seasons = $this->client->request('GET', "https://api.themoviedb.org/3/tv/$id?api_key=5356352546e70dce6c10c8c67d5e0604&append_to_response=". $seasons,['verify' => FALSE ]);
+		$seasons=json_decode($seasons->getBody(),true); 
 		
-		return $seasons;
-
-
-////		return $totalSeasons;
-//		for($i = 1 ; $i <= $totalSeasons ; $i++){
-//			$seasons[$i] = self::getSeason($id,$i);
-//		}
-
-//		return dd($seasons);
-
-
+		return $seasons;  
+		
 	}
 
-	public function searchTvSeries($seriesTitle){
-		//full url
-		//https://api.themoviedb.org/3/search/tv?api_key=5356352546e70dce6c10c8c67d5e0604&language=en-US&query=th&page=1
-		$client = new Client();
-		$category = '/search/tv';
-		$url = self::$baseURL. $category;
-		$res = $client->request('GET', $url,[
-			'verify' => FALSE,
-			'form_params' => [
-				'api_key' => self::$apiKey,
-				'language' => 'en-US',
-				'query' => $seriesTitle,
-				'page' => '1'
-			]
-		]);
+	public function searchSeries($seriesTitle){ 
+		
+		/*	Returns an array of search results	inputed by the user	*/
 
-//		$searchRes = json_encode($res->getBody(),true);
+		$url = self::$baseURL. '/search/tv';
+		
+		$this->form_params['query'] = $seriesTitle;
+		$this->params['form_params'] = $this->form_params;
+		 
+		$res = $this->client->request('GET', $url, $this->params);
+ 
 		$searchRes = json_decode($res->getBody(),true);
-		return $searchRes;
-//		return view('tv-series');
+		
+		return $searchRes; 
 
 	}
-	public function watchlistState (Request $request) { 
+	
+	public function getWatchlistState (Request $request) {  
 		
-		$ser = new Series;  
-		$watching = $ser->isWatching($request->get('uid'),$request->get('sid'));
+		/*	This function is ajaxed from the tv-series view so it determines if a user is watching a tv show or not	*/
+		
+		$watching = $this->ser->isWatching($request->get('uid'),$request->get('sid')); 
 		
 		return $watching == 1 ? 1 : 0;
 		
 	} 
 	
-	public function editWatchlist (Request $request) {
-		$ser = new Series; 
-		$user = new User;
-		if($ser->isWatching($request->get('uid'),$request->get('sid'))==0){
-			$ser->insertIntoWatchlist($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
+	public function editWatchlist (Request $request) { 
+		
+		/*If a user adds or delete a tv show from his watchlist it updates the schedule and watchlist table */
+		
+		if($this->ser->isWatching($request->get('uid'),$request->get('sid'))==0){
+			$this->ser->insertIntoWatchlist($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
 			$curDate = date('Y-m-d');   
-			self::addToSchedule($request->get('sid'),$ser,$curDate);
-			$user->addTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
+			self::addToSchedule($request->get('sid'),$this->ser,$curDate);
+			$this->user->addTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
 			return "added";
 		}
 		else{
-			$ser->deleteFromWatchlist($request->get('uid'),$request->get('sid'));
-			$ser->deleteFromSchedule($request->get('uid'),$request->get('sid'));
-			$user->subtractTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
+			$this->ser->deleteFromWatchlist($request->get('uid'),$request->get('sid'));
+			$this->ser->deleteFromSchedule($request->get('uid'),$request->get('sid'));
+			$this->user->subtractTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
 
 			return 'deleted';
 		} 
 		
 	}  
 	
-	public function watchlist(){  
+	public function showWatchlist(){  
 		
-		$ser = new Series;  
-		$watchlist = json_decode($ser->getWatchlist(Auth::user()->id),true); 
+		/*	Renders the user watchlist 	*/
+		 
+		$watchlist = json_decode($this->ser->getWatchlist(Auth::user()->id),true); 
 		return view('series.watchlist',compact('watchlist'));
+		
 	}
 
-	public function schedule(){
-		$ser = new Series;   
- 		$schedule = json_decode($ser->getSchedule(Auth::user()->id),true);
+	public function showSchedule(){
+		
+		/*Renders the user watchlist */
+  
+ 		$schedule = json_decode($this->ser->getSchedule(Auth::user()->id),true);
 		return view('series.schedule',compact('schedule'));   
+		
 	}
 	
 	public function addToSchedule($sid,$ser,$curDate){
+		
 		$series= self::getAllSeasons($sid); 
 		$curSeason = $series['number_of_seasons']; 
 		
@@ -241,31 +221,22 @@ class SeriesController extends Controller
 				}  
 			}
 		} 
-	}
-	
-	public function timpeSpent($sid){
-		
-		
-		
-	}
+	} 
 	 
-	public function ss(){ 
-		$user = new User;
-		return $user->subtractTotalMinutes(22,7);
+	public function ss(){  
+		return $this->user->subtractTotalMinutes(22,7);
 //		$ser = self::getSeries(46896);
 //		return $ser['episode_run_time'][0]; 
 		
 	}
 	
-	public function sss(){
-		$ser = new Series;
-//		$ser->insertIntoWatchlist(6 ,1, 's','s');
+	public function sss(){ 
+//		$this->ser->insertIntoWatchlist(6 ,1, 's','s');
 //		return $s = DB::table('_watchlist_uid_6')->where('series_id','=','6')->count();
 //				DB::table('_watchlist_uid_'. 6)->where('sid','=',1412)->delete(); 
-// 	return dd($ser->getWatchlist(6));
-//		$ser->createWatchlistTable( Auth::user()->id );
-		$client = new Client();
-		$seasons = $client->request('GET', "https://api.themoviedb.org/3/tv/60735?api_key=5356352546e70dce6c10c8c67d5e0604&append_to_response=",['verify' => FALSE ]);
+// 	return dd($this->ser->getWatchlist(6));
+//		$this->ser->createWatchlistTable( Auth::user()->id ); 
+		$seasons = $this->client->request('GET', "https://api.themoviedb.org/3/tv/60735?api_key=5356352546e70dce6c10c8c67d5e0604&append_to_response=",['verify' => FALSE ]);
 		$seasons=json_decode($seasons->getBody(),true);
 		dd($seasons); 
 	}

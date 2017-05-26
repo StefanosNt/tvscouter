@@ -16,24 +16,31 @@
 Auth::routes();
 
 Route::GET('/', 'HomeController@index')->name('landing');
-Route::GET('/tv/category={category}&page={page}', 'SeriesController@getSection')->middleware('auth');
-Route::GET('/tv/schedule', 'SeriesController@schedule')->middleware('auth');
-Route::GET('/tv/watchlist', 'SeriesController@watchlist')->middleware('auth');
-Route::GET('/settings', 'UserController@settings')->middleware('auth');
+Route::GET('/tv/category={category}&page={page}', 'SeriesController@showSection')->middleware('auth');
+Route::GET('/tv/schedule', 'SeriesController@showSchedule')->middleware('auth');
+Route::GET('/tv/watchlist', 'SeriesController@showWatchlist')->middleware('auth');
+Route::GET('/settings', 'UserController@index')->middleware('auth');
+Route::GET('/settings/user_password_reset', 'UserController@getUserPasswordReset')->middleware('auth');
+
+
+
 
 Route::GET('/tv/{id}','SeriesController@showSeries');
 Route::GET('/tv/{id}/season/{season}','SeriesController@getSeason');
 Route::GET('/tv/{id}/all','SeriesController@getAllSeasons');
-Route::GET('/tv/search/{title}','SeriesController@searchTvSeries');
+Route::GET('/tv/search/{title}','SeriesController@searchSeries');
 
 
 Route::POST('/tv/{id}','SeriesController@editWatchlist'); 
-Route::POST('/watchliststate','SeriesController@watchlistState');
-Route::GET('/watchliststate','SeriesController@watchlistState');
+Route::POST('/watchliststate','SeriesController@getWatchlistState');
+Route::POST('/settings/update_info','userController@updateInfo')->name('update_info');
+Route::POST('/settings/user_password_reset', 'UserController@passwordReset')->name('user.password_reset')->middleware('auth');
+
+
+Route::GET('/watchliststate','SeriesController@getWatchlistState');
 //Route::DELETE('/tv/{id}','SeriesController@removeFromWatchlist'); 
 
-Route::GET('/usertables','SeriesController@checkWatchlistTableState');
-ROute::GET('/{category}/top5','SeriesController@getTop5');
+Route::GET('/usertables','SeriesController@checkWatchlistTableState'); 
 
 //TESTING
 

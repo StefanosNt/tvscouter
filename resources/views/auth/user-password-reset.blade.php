@@ -1,39 +1,38 @@
 @extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row pt50">
-        <div class="col s8 offset-s2"> 
-
-			@if (session('status')) 
-				<div class="card-panel green lighten-1 mb50"> 
-					<span class="white-text">{{ session('status') }}</span>
-				</div>
-			@endif
-			<h4 class="pb20">Reset Password</h4> 
-
-			<form role="form" method="POST" action="{{ route('password.request') }}">
-				{{ csrf_field() }}
-				<input type="hidden" name="token" value="{{ $token }}">
-
-				<div class="{{ $errors->has('email') ? ' has-error' : '' }}">
+	
+	@section('content')
+	
+	<div class="container">
+		@if(session('status'))
+			<div class="card-panel @if(session('status')=='Success') green @else red @endif lighten-1 mb50"> 
+				<span class="white-text">{{ session('status') }}</span>
+			</div> 
+		@endif
+		<h4 class="pb20">Reset Password</h4> 
+		
+		<div class="row">
+			<form role="form" method="POST" action="{{ route('user.password_reset') }}">
+				{{ csrf_field() }} 
+				
+				
+				<div class="{{ $errors->has('password') ? ' has-error' : '' }}">
 
 					<div class="input-field">
-						<label for="email">E-Mail Address</label>
-						<input id="email" type="email" name="email" class="validate" value="{{ $email or old('email') }}" required autofocus>
+						<label for="password">Old Password</label>
+						<input id="password" type="password" name="password_old" required>
 
-						@if ($errors->has('email'))
-							<span><strong>{{ $errors->first('email') }}</strong></span>
+						@if ($errors->has('password_old'))
+							<span><strong>{{ $errors->first('password_old') }}</strong></span>
 						@endif
 					</div>
 				</div>
-
+				
 				<div class="{{ $errors->has('password') ? ' has-error' : '' }}">
 
 					<div class="input-field">
 						<label for="password">Password</label>
 						<input id="password" type="password" name="password" required>
-						
+
 						@if ($errors->has('password'))
 							<span><strong>{{ $errors->first('password') }}</strong></span>
 						@endif
@@ -57,7 +56,8 @@
 					</button> 
 				</div>
 			</form>
-        </div>
-    </div>
-</div>
+		</div>
+	</div>
+
+	
 @endsection

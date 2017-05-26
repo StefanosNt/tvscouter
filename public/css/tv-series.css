@@ -1,0 +1,164 @@
+.badges {
+	padding-left: 10px;
+}
+
+.status {
+	font-weight: 400;
+	font-size: 0.8rem!important;
+	color: #fff!important;
+	border-radius: 2px;
+	float: none!important;
+	padding: 6px!important;
+} 
+.collection-item {
+	cursor: default;
+}
+
+
+
+.seasons li a{ 
+	color: initial!important;
+}
+.seasons li a.active { 
+	background-color: rgb(0, 142, 255)!important;
+	color: white!important;
+}
+.series-poster-wrapper{
+	height: 400px; 
+	background-size: cover!important;
+	background-attachment: fixed!important;
+}
+
+.series-poster-block {
+	float: right;
+	width: 250px;
+	margin: 60px 40px;
+}
+
+.series-poster-img {
+	max-width: 250px;
+}
+
+.episode-list-header {
+	background-color: rgb(0, 142, 255)!important; 
+	color: white;
+}
+
+.episode-list-header,
+.episode-header{
+	margin:0;
+}
+
+.watchlist-btn:hover {
+	background-color: inherit;
+	box-shadow: 0 0 0;
+}
+
+.watchlist-btn:focus {
+	background-color: inherit;
+	color: #2196f3;
+	outline: none;
+}
+
+.watchlist-btn-true {
+	background-color: #2196f3!important;
+	color: white!important;
+	outline: none!important;
+}
+
+.watchlist-btn {
+	width: 100%;
+	margin: 5px 0px;
+	box-shadow: 0 0 0;
+	color: #2196f3;
+	background: white;
+	border: solid 2px #2196f3;
+}
+
+.title-block {
+	padding: 10px 20px;
+	font-size: 18px;
+	list-style: 28px;
+}
+
+.title {
+	padding-right:20px;
+	display: inline-block; 
+} 
+.title h2 {
+	font-weight: 300;
+	margin-bottom: 0px;
+} 
+
+.rating {
+	padding-left: 20px;
+	font-size: 2.5rem;
+}
+
+.stars-container {
+	font-size: 3rem;
+	position: relative;
+	display: inline-block;
+	color: transparent;
+}
+
+.stars-container:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '★★★★★';
+	color: lightgray;
+}
+
+.stars-container:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '★★★★★';
+	color: gold;
+	overflow: hidden;
+}
+
+.stars-0:after {
+	width: 0%;
+}
+
+.stars-10:after {
+	width: 10%;
+}
+
+.stars-20:after {
+	width: 20%;
+}
+
+.stars-30:after {
+	width: 30%;
+}
+
+.stars-40:after {
+	width: 40%;
+}
+
+.stars-50:after {
+	width: 50%;
+}
+
+.stars-60:after {
+	width: 60%;
+}
+
+.stars-70:after {
+	width: 70%;
+}
+
+.stars-80:after {
+	width: 80%;
+}
+
+.stars-90:after {
+	width: 90%;
+}
+
+.stars-100:after {
+	width: 100;
+}

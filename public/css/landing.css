@@ -1,0 +1,124 @@
+html,body,main 	{	height: 100%;						} 
+
+.pl50			{	padding-left: 50px;					}
+.pt30			{	padding-top: 30px;					}
+.pt50			{	padding-top: 50px;					}
+.pb10			{	padding-bottom: 10px;				}
+.pb20			{	padding-bottom: 20px;				}
+.pb30			{	padding-bottom: 30px;				}
+.ptb50			{	padding: 50px 0px 30px 0px;			}
+.mt0			{	margin-top: 0px;					}
+.mt30			{	margin-top: 30px;					}
+.mb10			{	margin-bottom:20px;					}
+.mb20			{	margin-bottom:20px;					}
+.mb30			{	margin-bottom:30px;					}
+
+
+main {
+	padding-left: 0;
+	padding-top: 0;
+}
+
+container {
+	display: table-cell;
+}
+
+ul a {
+	color: #444;
+}
+ 
+p {
+	line-height: 2rem;
+	text-align: center;
+} 
+
+#navbar { 
+	background: linear-gradient(141deg, #F44336 0%, rgb(244, 67, 54) 51%, #E53935 75%);
+	z-index: 99;
+	box-shadow: inset 0px -1px 0px 0px;
+} 
+#slide-out {
+	width:158px;
+}
+#logo {
+	padding-left: 20px;
+}
+#index-banner {
+	background-color: rgba(137, 81, 81, 0.32);
+}
+
+#index-banner h1 {
+	font-size: 9rem;
+	text-shadow: 4px 4px 4px #d22727;
+}
+
+#index-banner h5 {
+	font-size: 2rem;
+	text-shadow: 0px 3px 0px #5b5a9e;
+}  
+#index-banner,.content{
+	height: 100%;
+}
+
+
+#features {
+	height: 511px;
+	display: table-cell;
+	vertical-align: middle;
+	overflow: hidden;
+}  
+
+#features i { 
+	font-size: 9rem;
+} 
+ 
+#networks {
+	width: 120%;
+}  
+
+.parallax-container {
+	min-height: 380px;
+	line-height: 0;
+	height: auto;
+	color: rgba(255, 255, 255, .9);
+}
+
+.parallax-container .section {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+.parallax-container .container {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+
+@media only screen and (max-width: 992px) {
+	.parallax-container .section {
+		position: absolute;
+		/*		top: 40%;*/
+	}
+	#index-banner .section {
+		/*		top: 10%;*/
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	#index-banner .section {
+		top: 0;
+	}
+	#index-banner h1 {
+		font-size: 5rem;
+	}
+	.icon-block {
+		padding: 0 15px;
+	}
+	.icon-block .material-icons {
+		font-size: inherit;
+	}
+	footer.page-footer {
+		margin: 0;
+	}
+}
