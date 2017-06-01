@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema; 
 use Illuminate\Support\Facades\Auth; 
-use GuzzleHttp\Client; 
-use App\Series;
+use GuzzleHttp\Client;  
 use App\User;
 use App\Watchlist;
 use App\Schedule;
@@ -21,8 +20,7 @@ class SeriesController extends Controller
 		/*	Initialization of controllers and default params	*/
 		
 		$this->client 		=	new Client;
-		$this->user			= 	new User;
-		$this->ser 			= 	new Series;
+		$this->user			= 	new User; 
 		$this->watchlist	= 	new Watchlist;
 		$this->schedule		= 	new Schedule;
 		

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;  
-use Illuminate\Support\Facades\DB; 
-use App\Series; 
+use Illuminate\Support\Facades\DB;  
 use App\User; 
 use App\Watchlist; 
 use App\Schedule; 
@@ -15,8 +14,7 @@ class HomeController extends Controller
  
     public function __construct() {
 		
-		$this->serController = new SeriesController;
-		$this->ser = new Series;
+		$this->serController = new SeriesController; 
 		$this->user = new User;
 		$this->watchlist = new Watchlist;
 		$this->schedule = new Schedule;
@@ -32,7 +30,7 @@ class HomeController extends Controller
 			
 			$curDate = date('Y-m-d'); 
 			$updated = $this->schedule->updatedAt(Auth::user()->id);
-			$watchlist = json_decode(DB::table('_watchlist_uid_'.Auth::user()->id)->get(),true);
+			$watchlist = json_decode($this->watchlist->get(Auth::user()->id),true);
 			if(strtotime($updated)-strtotime($curDate)>0){
 			
 				$this->schedule->removeSchedule(Auth::user()->id); 
