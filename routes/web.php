@@ -16,19 +16,19 @@
 Auth::routes();
 
 Route::GET('/'										, 	'HomeController@index')->name('landing');
+Route::GET('/tv/schedule'							, 	'ScheduleController@showSchedule');
+Route::GET('/tv/watchlist'							,	'WatchlistController@showWatchlist'); 
+Route::GET('/tv/category={category}&page={page}'	, 	'SeriesController@showSection');
 Route::GET('/tv/{id}'								, 	'SeriesController@showSeries');
 Route::GET('/tv/{id}/all'							, 	'SeriesController@getAllSeasons');
 Route::GET('/tv/{id}/season/{season}'				, 	'SeriesController@getSeason');
-Route::GET('/tv/category={category}&page={page}'	, 	'SeriesController@showSection');
-Route::GET('/schedule'								, 	'ScheduleController@showSchedule');
-Route::GET('/watchlist'								,	'WatchlistController@showWatchlist'); 
 Route::GET('/settings'								, 	'UserController@index');
 Route::GET('/settings/user_password_reset'			, 	'UserController@getUserPasswordReset');
 Route::GET('/people/{pid}'							,	'PeopleController@get');
 Route::GET('/watchliststate'						,	'SeriesController@getWatchlistState');
 
-Route::POST('/tv/{id}'								,	'WatchlistController@editWatchlist'); 
 Route::POST('/tv/search/'							,	'SearchController@searchSeries');
+Route::POST('/tv/{id}'								,	'WatchlistController@editWatchlist'); 
 Route::POST('/watchliststate'						,	'WatchlistController@getWatchlistState');
 Route::POST('/settings/update_info'					,	'UserController@updateInfo')->name('update_info');
 Route::POST('/settings/user_password_reset'			,	'UserController@passwordReset')->name('user.password_reset');

@@ -63,8 +63,8 @@
 		<li id="user-name"> <a href="/settings" class="white-text center"> {{ Auth::user()->name }}</a> </li>
 		<li id="user-img"> <img class="circle" src="{{URL::asset('storage')}}/{{Auth::user()->avatar}}" width="100px"> </li>
 		<li><a class="waves-effect white-text sidebar-option" href="/"><i class="material-icons white-text">home</i>HOME</a></li>
-		<li><a class="waves-effect white-text sidebar-option" href="/watchlist"><i class="material-icons white-text">check</i>WATCHLIST</a></li>
-		<li><a class="waves-effect white-text sidebar-option" href="/schedule"><i class="material-icons white-text">schedule</i>SCHEDULE</a></li>
+		<li><a class="waves-effect white-text sidebar-option" href="/tv/watchlist"><i class="material-icons white-text">check</i>WATCHLIST</a></li>
+		<li><a class="waves-effect white-text sidebar-option" href="/tv/schedule"><i class="material-icons white-text">schedule</i>SCHEDULE</a></li>
 		<li><a class="waves-effect white-text sidebar-option" href="/tv/category=popular&page=1"><i class="material-icons white-text">trending_up</i>POPULAR</a></li>
 		<li><a class="waves-effect white-text sidebar-option" href="/tv/category=top_rated&page=1"><i class="material-icons white-text">favorite</i>TOP RATED</a></li>
 		<li><a class="waves-effect white-text sidebar-option" href="/settings"><i class="material-icons white-text">settings</i>SETTINGS</a></li>
