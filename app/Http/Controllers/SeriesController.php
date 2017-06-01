@@ -71,8 +71,7 @@ class SeriesController extends Controller
 		
 		/*	Returns a series array of given id with an added index of total series runtime	*/
 		
-		$url = self::$baseURL. '/tv/'. $id;
-		
+		$url = self::$baseURL. '/tv/'. $id. '?'. self::$apiKey. '&append_to_response=videos,recommendations,credits'; 
 		$series = $this->client->request('GET', $url, $this->params); 
 		$series = json_decode($series->getBody(),true); 		 
 		$series['total_series_minutes'] = $series['number_of_episodes']*$series['episode_run_time'][0];  
@@ -141,6 +140,14 @@ class SeriesController extends Controller
 		$searchRes = json_decode($res->getBody(),true);
 		
 		return $searchRes; 
+
+	}
+	
+	public function getRecommendations($id){
+		
+		$url = self::$baseURL. '/tv/'. $id. '/recommendations';
+		$res = $this->client->request('GET', $url, $this->params);
+		return json_decode($res->getBody(),true)['results'];
 
 	}
 	
@@ -223,8 +230,10 @@ class SeriesController extends Controller
 		} 
 	} 
 	 
-	public function ss(){  
-		return $this->user->subtractTotalMinutes(22,7);
+	public function ss(){
+		dd(self::getSeries(456));
+//		dd(self::getRecommendations(456));
+//		return $this->user->subtractTotalMinutes(22,7);
 //		$ser = self::getSeries(46896);
 //		return $ser['episode_run_time'][0]; 
 		

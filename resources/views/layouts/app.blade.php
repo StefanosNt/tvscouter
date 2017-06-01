@@ -18,6 +18,7 @@
 	@endif
 
 	<script src="{{ URL::asset('js/jquery-3.2.1.min.js') }}"></script> 
+	<script src="{{ URL::asset('js/jquery.mousewheel.min.js') }}"></script> 
 	<script src="{{ URL::asset('materialize/js/materialize.min.js') }}"></script>
 	<script src="{{ URL::asset('js/app.js') }}"></script>
 	@yield('js')

@@ -9,13 +9,37 @@
 	border-radius: 2px;
 	float: none!important;
 	padding: 6px!important;
+	line-height: 35px!important;
 } 
 .collection-item {
 	cursor: default;
 }
+.extras-wrapper{
+	display:flex;
+	overflow: auto;
+}
+.extras{
+	display: inline-table;	
+	margin: 0px!important;  
+}
+.extras-aspect-ratio { 
+  overflow: hidden;
+  padding-bottom: 130%;
+}
 
-
-
+.extras-aspect-ratio a{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.extras-body {
+	height: 60px;
+	padding: 10px!important;
+	overflow: hidden; 
+}  
 .seasons li a{ 
 	color: initial!important;
 }
@@ -76,9 +100,8 @@
 }
 
 .title-block {
-	padding: 10px 20px;
-	font-size: 18px;
-	list-style: 28px;
+	padding: 22px 22px;
+	font-size: 18px; 
 }
 
 .title {
@@ -89,7 +112,7 @@
 	font-weight: 300;
 	margin-bottom: 0px;
 } 
-
+ 
 .rating {
 	padding-left: 20px;
 	font-size: 2.5rem;

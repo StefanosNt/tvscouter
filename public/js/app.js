@@ -11,14 +11,24 @@ $(document).ready(function() {
 	var username = "info";
 	var hostname = "tvscouter.com";
 	var linktext = username + "@" + hostname 
-	    
-	$('.modal').modal();
+	
+	//changeTheme(oldColor, newColor);  
+	
+
 	$('.parallax').parallax();  
 	$(".button-collapse").sideNav(); 
 	$('.scrollspy').scrollSpy({ scrollOffset: 60 });  
+	$('.modal').modal({
+		complete: function() { $("iframe").attr("src", $("iframe").attr("src")); } 
+	});
+ 
+//    $('.extras-wrapper').mousewheel(function(e, delta) {
+//			this.scrollLeft -= (delta * 40);
+//			e.preventDefault();
+//		
+//			console.log(delta);
+//    });
 	
-	//changeTheme(oldColor, newColor);
-	 
 	
 	$('#contact-email').text(linktext);	
 	if(url == '/password/reset')	$("#options").hide();

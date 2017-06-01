@@ -54,8 +54,8 @@ class HomeController extends Controller
 			$days = floor($hours / 24);
 			$hours -= $days * 24;
  			
-			$popular = $this->serController->getSection('popular',10);
-			$topRated = $this->serController->getSection('top_rated',10); 
+			$popular = $this->serController->getSection('popular',12);
+			$topRated = $this->serController->getSection('top_rated',12); 
 			
 			return view('homepage',compact('totalHours','years','months','days','hours','popular','topRated'));
 			

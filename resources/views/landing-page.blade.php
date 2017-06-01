@@ -50,9 +50,17 @@
 	<div class="row">
 		<div class="col s12 center">
 			<h4>Contact </h4>
-			<p class="left-align light center"> The development of the site is in alpha stage. For any further information or request feel free to send us an email at <b><span id="contact-email"></span></b></p>
+			<p class="left-align light center"> The development of this website is in alpha stage. For any further information or request feel free ask at <b><span id="contact-email"></span></b></p>
 		</div>
 	</div> 
 </div>
 
+<footer class="page-footer pt0">  
+	<div class="footer-copyright grey lighten-4">
+		<div class="container">
+			<p><a href="https://www.themoviedb.org/" target="_blank"><img class="right pl15" src="{{URL::asset('photos/powered-by-rectangle-green.svg')}}" height="40px" width="auto"alt=""></a></p>
+			<p class="black-text">This product uses the TMDb API but is not endorsed or certified by TMDb.</p>
+		</div>
+	</div>
+</footer>
 @endsection

@@ -15,14 +15,15 @@
 
 @section('content')
 <div class="container-fluid">
-	<div class="series-poster-wrapper z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}');">
+	<div class="series-poster-wrapper z-depth-1" style="background: url('https://image.tmdb.org/t/p/w1280/{{$series['backdrop_path']}}') center; ">
 		<div class="series-poster-block">
 			<div><img class="series-poster-img z-depth-2" src="https://image.tmdb.org/t/p/w500/{{$series['poster_path']}}"></div>
-			<button class="watchlist-btn btn">Add to watchlist</button>
+			<a class="watchlist-btn btn">Add to watchlist</a>
+			<a class="btn red w100p bs0" href="#modal1"> Trailer</a>
 		</div> 
 	</div>
 	<p class="invisible">{{$n=$series['vote_average']}}</p>
-	@php $int = $n%10; $dec = ($n*100)%100; if($dec>50) $int++; $int = $int*10; @endphp
+	@php $int = $n%10; $dec = ($n*100)%100; if($dec>50) $int++; $int = $int*10; $trailer = 0;@endphp
 
 	<div class="title-block">
 		<span class="title"><h2>{{$series['name']}}</h2></span>
@@ -37,6 +38,45 @@
 	</div>
 
 	<p class="title-block">{{$series['overview']}}</p>
+	<h4 class="ptblr1020 fw300">Cast</h4>
+	<div class="row extras-wrapper">
+		@foreach($series['credits']['cast'] as $k => $v)
+			<div class="col s4 m3 l2 xl1 extras">   
+				<div class="card">
+					<div class="card-image extras-aspect-ratio">
+						@if($v['profile_path']===null)
+							<a href="/tv/{{$v['id']}}"><img src="http://placehold.it/342x513?text=NO+POSTER"></a>
+						@else
+							<a href="/tv/{{$v['id']}}"><img src="https://image.tmdb.org/t/p/w185/{{$v['profile_path']}}"></a>
+						@endif
+					</div>
+					<div class="card-content extras-body">
+						<span class="center"> {{$v['name']}} </span>
+					</div>
+				</div>  
+			</div>
+		@endforeach
+	</div>
+	<h4 class="ptblr1020 fw300">Recommended Series</h4>
+	<div class="row extras-wrapper">
+		@foreach($series['recommendations']['results'] as $k => $v)
+			<div class="col s4 m3 l2 xl1 extras">   
+				<div class="card">
+					<div class="card-image extras-aspect-ratio">
+						@if($v['poster_path']===null)
+							<a href="/tv/{{$v['id']}}"><img src="http://placehold.it/342x513?text=NO+POSTER"></a>
+						@else
+							<a href="/tv/{{$v['id']}}"><img src="https://image.tmdb.org/t/p/w185/{{$v['poster_path']}}"></a>
+						@endif
+					</div>
+					<div class="card-content extras-body">
+						<span class="center"> {{$v['name']}} </span>
+					</div>
+				</div>  
+			</div>
+		@endforeach
+	</div>
+	<h4 class="ptblr1020 fw300">Episode List</h4> 
 	<div class="row" class="series-details">
 		<div class="col s12 m2">
 			<ul class="collection seasons">
@@ -73,6 +113,23 @@
 				</li>
 				@endforeach
 			</ul>
+		</div>
+	</div>
+	
+	<div id="modal1" class="modal">
+		<div class="modal-content p0"> 
+			@foreach($series['videos']['results'] as $k => $v)
+				@if($v['type']=='Trailer')
+					<div class="video-container">
+						<iframe width="853" height="480" src="https://www.youtube.com/embed/{{$v['key']}}" frameborder="0" allowfullscreen></iframe>
+					</div>
+					@php $trailer=1; @endphp
+					@break
+				@endif 
+			@endforeach
+			@if($trailer==0)
+				<h5 class="center">No Trailer Available</h5>
+			@endif
 		</div>
 	</div>
 	@endsection 

@@ -18,7 +18,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			@foreach($section as $k => $v)
-			<div class="col s6 m4 l3 xl2 tv-section">
+			@if($k==18) @break @endif
+			<div class="col s6 m4 l2 tv-section">
 				<div class="card hoverable">
 					<div class="card-image common-aspect-ratio">
 						@if($v['poster_path']===null)
@@ -30,7 +31,6 @@
 					</div>
 					<div class="card-content pop-body">
 						<span class="card-title"> <a href="/tv/{{$v['id']}}"> {{$v['name']}} </a> </span>
-						<!--				  <p>{{substr($v['overview'],0,100)}}...</p>-->
 					</div>
 				</div>
 			</div>
