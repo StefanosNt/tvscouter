@@ -15,38 +15,25 @@
 
 Auth::routes();
 
-Route::GET('/', 'HomeController@index')->name('landing');
-Route::GET('/tv/category={category}&page={page}', 'SeriesController@showSection')->middleware('auth');
-Route::GET('/tv/schedule', 'SeriesController@showSchedule')->middleware('auth');
-Route::GET('/tv/watchlist', 'SeriesController@showWatchlist')->middleware('auth');
-Route::GET('/settings', 'UserController@index')->middleware('auth');
-Route::GET('/settings/user_password_reset', 'UserController@getUserPasswordReset')->middleware('auth');
+Route::GET('/'										, 	'HomeController@index')->name('landing');
+Route::GET('/tv/{id}'								, 	'SeriesController@showSeries');
+Route::GET('/tv/{id}/all'							, 	'SeriesController@getAllSeasons');
+Route::GET('/tv/{id}/season/{season}'				, 	'SeriesController@getSeason');
+Route::GET('/tv/schedule'							, 	'ScheduleController@showSchedule');
+Route::GET('/tv/watchlist'							,	'WatchlistController@showWatchlist'); 
+Route::GET('/tv/category={category}&page={page}'	, 	'SeriesController@showSection');
+Route::GET('/settings'								, 	'UserController@index');
+Route::GET('/settings/user_password_reset'			, 	'UserController@getUserPasswordReset');
+Route::GET('/people/{pid}'							,	'PeopleController@get');
+Route::GET('/watchliststate'						,	'SeriesController@getWatchlistState');
 
-
-
-
-Route::GET('/tv/{id}','SeriesController@showSeries');
-Route::GET('/tv/{id}/season/{season}','SeriesController@getSeason');
-Route::GET('/tv/{id}/all','SeriesController@getAllSeasons');
-Route::GET('/tv/search/{title}','SeriesController@searchSeries');
-
-
-Route::POST('/tv/{id}','SeriesController@editWatchlist'); 
-Route::POST('/watchliststate','SeriesController@getWatchlistState');
-Route::POST('/settings/update_info','UserController@updateInfo')->name('update_info');
-Route::POST('/settings/user_password_reset', 'UserController@passwordReset')->name('user.password_reset')->middleware('auth');
-
-
-Route::GET('/watchliststate','SeriesController@getWatchlistState');
-//Route::DELETE('/tv/{id}','SeriesController@removeFromWatchlist'); 
-
-Route::GET('/usertables','SeriesController@checkWatchlistTableState'); 
+Route::POST('/tv/{id}'								,	'WatchlistController@editWatchlist'); 
+Route::POST('/tv/search/'							,	'SearchController@searchSeries');
+Route::POST('/watchliststate'						,	'WatchlistController@getWatchlistState');
+Route::POST('/settings/update_info'					,	'UserController@updateInfo')->name('update_info');
+Route::POST('/settings/user_password_reset'			,	'UserController@passwordReset')->name('user.password_reset');
 
 //TESTING
 
-Route::GET('/ss','SeriesController@ss');
-Route::GET('/sss','SeriesController@sss');
-//Route::GET('/sss/{id}/{sid}/{sname}/{sposter}','SeriesController@sss');
-
-//Route::get('/tv/{seriesTitle}','SeriesController@getTvSeries');
-//Route::get('/tv/{id}/season/{season}','SeriesController@showSeriesSeason');
+Route::GET('/ss'									,	'SeriesController@ss');									
+Route::GET('/sss'									,	'SeriesController@sss'); 

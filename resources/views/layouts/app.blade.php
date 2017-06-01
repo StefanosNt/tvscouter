@@ -42,7 +42,9 @@
 			<i class="material-icons">search</i>
 		</a>
 		<div id="search-box">
-			<input class="search-input right" type="text" name="search" placeholder="Search for a show.." autocomplete="off">
+			<form action="">
+				<input class="search-input right" type="text" name="search" placeholder="Search for a show.." autocomplete="off">
+			</form>		
 			<div class="loading center-align right">
 				<div class="preloader-wrapper big active">
 					<div class="spinner-layer spinner-blue-only">
@@ -75,7 +77,9 @@
 	</ul>
 	 
 	@else
+	
 		<!--		Show the top bar in landing page 		-->
+		
 		<div class="navbar-fixed">
 			<nav id="navbar" class="top-nav">
 				<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>

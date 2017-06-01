@@ -12,9 +12,12 @@ use App\Schedule;
 class HomeController extends Controller
 {
  
-    public function __construct() {
+	
+    public function __construct() { 
+			  
 		
 		$this->serController = new SeriesController; 
+		$this->scheduleController = new ScheduleController; 
 		$this->user = new User;
 		$this->watchlist = new Watchlist;
 		$this->schedule = new Schedule;
@@ -35,7 +38,7 @@ class HomeController extends Controller
 			
 				$this->schedule->removeSchedule(Auth::user()->id); 
 				foreach($watchlist as $w){ 
-	 				$this->serController->addToSchedule($w['series_id'],$curDate);   
+	 				$this->scheduleController->addToSchedule($w['series_id'],$curDate);   
 				} 
 			}
 			  

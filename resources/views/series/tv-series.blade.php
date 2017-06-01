@@ -19,7 +19,7 @@
 		<div class="series-poster-block">
 			<div><img class="series-poster-img z-depth-2" src="https://image.tmdb.org/t/p/w500/{{$series['poster_path']}}"></div>
 			<a class="watchlist-btn btn">Add to watchlist</a>
-			<a class="btn red w100p bs0" href="#modal1"> Trailer</a>
+			<a class="btn red w100p bs0" href="#trailer-modal"> Trailer</a>
 		</div> 
 	</div>
 	<p class="invisible">{{$n=$series['vote_average']}}</p>
@@ -45,9 +45,9 @@
 				<div class="card">
 					<div class="card-image extras-aspect-ratio">
 						@if($v['profile_path']===null)
-							<a href="/tv/{{$v['id']}}"><img src="http://placehold.it/342x513?text=NO+POSTER"></a>
+							<a id="{{$v['id']}}" href="#person-modal" class="people"><img id="{{$v['id']}}" src="http://placehold.it/342x513?text=NO+POSTER"></a>
 						@else
-							<a href="/tv/{{$v['id']}}"><img src="https://image.tmdb.org/t/p/w185/{{$v['profile_path']}}"></a>
+							<a id="{{$v['id']}}" href="#person-modal" class="people"><img id="{{$v['id']}}" src="https://image.tmdb.org/t/p/w185/{{$v['profile_path']}}"></a>
 						@endif
 					</div>
 					<div class="card-content extras-body">
@@ -116,7 +116,7 @@
 		</div>
 	</div>
 	
-	<div id="modal1" class="modal">
+	<div id="trailer-modal" class="modal">
 		<div class="modal-content p0"> 
 			@foreach($series['videos']['results'] as $k => $v)
 				@if($v['type']=='Trailer')
@@ -132,4 +132,47 @@
 			@endif
 		</div>
 	</div>
+	
+	<div id="person-modal" class="modal">
+		<div class="modal-content"> 
+			<div class="container" id="person-info"> 
+				<div class="row valign-wrapper">
+					<div class="col s12 m6">
+						<img id="person-img" class="responsive-img" src="" alt="">
+					</div>
+					<div class="col s12 m6" style="text-align:center">
+						<p>Name: <span id="name"></span></p>
+						<p>Birthday: <span id="birthday"></span></p>
+						<p>Birthplace: <span id="birthday"></span></p> 
+						<p><a id="imdb-link" href="" target="_blank">IMDB Link</a></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<p>Biography</p>
+						<p id="bio" class="light"></p> 
+					</div> 
+				</div> 
+				
+			</div>
+
+			 
+			<div id="loader">
+				<div class="preloader-wrapper active">
+					<div class="spinner-layer spinner-red-only">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>  
+		</div>
+	</div>
+	
 	@endsection 

@@ -18,7 +18,9 @@ class SeriesController extends Controller
 	public function __construct(){
 		
 		/*	Initialization of controllers and default params	*/
-		
+			 
+		$this->middleware('auth')->except('ss');
+		 
 		$this->client 		=	new Client;
 		$this->user			= 	new User; 
 		$this->watchlist	= 	new Watchlist;
@@ -127,23 +129,7 @@ class SeriesController extends Controller
 		return $seasons;  
 		
 	}
-
-	public function searchSeries($seriesTitle){ 
-		
-		/*	Returns an array of search results	inputed by the user	*/
-
-		$url = self::$baseURL. '/search/tv';
-		
-		$this->form_params['query'] = $seriesTitle;
-		$this->params['form_params'] = $this->form_params;
-		 
-		$res = $this->client->request('GET', $url, $this->params);
  
-		$searchRes = json_decode($res->getBody(),true);
-		
-		return $searchRes; 
-
-	}
 	
 	public function getRecommendations($id){
 		
@@ -152,88 +138,7 @@ class SeriesController extends Controller
 		return json_decode($res->getBody(),true)['results'];
 
 	}
-	
-	public function getWatchlistState (Request $request) {  
-		
-		/*	This function is ajaxed from the tv-series view so it determines if a user is watching a tv show or not	*/
-		
-		$watching = $this->watchlist->isWatching($request->get('uid'),$request->get('sid')); 
-		
-		return $watching == 1 ? 1 : 0;
-		
-	} 
-	
-	public function editWatchlist (Request $request) { 
-		
-		/*If a user adds or delete a tv show from his watchlist it updates the schedule and watchlist table */
-		
-		if($this->watchlist->isWatching($request->get('uid'),$request->get('sid'))==0){
-			$this->watchlist->insert($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
-			$curDate = date('Y-m-d');   
-			self::addToSchedule($request->get('sid'),$curDate);
-			$this->user->addTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
-			return "added";
-		}
-		else{
-			$this->watchlist->remove($request->get('uid'),$request->get('sid'));
-			$this->schedule->removeSeries($request->get('uid'),$request->get('sid'));
-			$this->user->subtractTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
-
-			return 'deleted';
-		} 
-		
-	}  
-	
-	public function showWatchlist(){  
-		
-		/*	Renders the user watchlist 	*/
-		 
-		$watchlist = json_decode($this->watchlist->get(Auth::user()->id),true); 
-		return view('series.watchlist',compact('watchlist'));
-		
-	}
-
-	public function showSchedule(){
-		
-		/*Renders the user schedule */
-  
- 		$schedule = json_decode($this->schedule->get(Auth::user()->id),true);
-		return view('series.schedule',compact('schedule'));   
-		
-	}
-	
-	public function addToSchedule($sid,$curDate){
-		
-		$series= self::getAllSeasons($sid); 
-		$curSeason = $series['number_of_seasons']; 
-		
-		if($series['status']!=="Canceled" && $series['status']!=="Ended"){   
-			
-			foreach ($series['season/'. $curSeason]['episodes'] as $episodes){
-								
-				if ($curDate <= $episodes['air_date']) {
-
-					$arr = [
-						'sid'			=>	$series['id'],
-						'sname'			=>	$series['name'], 
-						'sposter'		=>	$series['poster_path'],
-						'snetwork'		=>	implode(',', array_map(function($el){ return $el['name']; }, $series['networks'])),
-						'sgerne'		=>	implode(',', array_map(function($el){ return $el['name']; }, $series['genres'])),
-						'season'		=>	$series['number_of_seasons'],
-						'epnumber'		=>	$episodes['episode_number'],
-						'epname'		=>	$episodes['name'],
-						'epoverview'	=>	$episodes['overview'],
-						'epairdate'		=>	$episodes['air_date']
-					];	
-					
-					$schedule = new Schedule;
-					$schedule->insert(Auth::user()->id,$arr); 
-					
-				}  
-			}
-		} 
-	} 
-	 
+ 
 	public function ss(){ 
 		
 		return $this->schedule->updatedAt(Auth::user()->id);

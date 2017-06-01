@@ -122,10 +122,12 @@ $(document).ready(function() {
 
 		$('#search-results').html('');
 		$('#search-results').slideDown("fast");
-		$.ajax({
-			async: false,
-			method: 'GET',
-			url: '/tv/search/' + $('.search-input').val().toString(),
+		$.ajax({ 
+			method: 'POST',
+			url: '/tv/search',
+			data: {
+				"searchPhrase": $('.search-input').val().toString() 
+			},
 			success: function(res) {
 				console.log(res);
 				if (res.results.length === 0) {
@@ -172,7 +174,12 @@ $(document).ready(function() {
 	}
 });  
   
-	
+$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+});
+
 (function(i, s, o, g, r, a, m) {
 	i['GoogleAnalyticsObject'] = r;
 	i[r] = i[r] || function() {

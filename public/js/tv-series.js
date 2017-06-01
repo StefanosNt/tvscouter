@@ -1,44 +1,36 @@
 
 $(document).ready(function() {
-	var watching, seasons;
+	var seasons;
 	var i = 0;
 
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-
 	function watchState() {
+		
 		$.ajax({
-			'_token': $('meta[name=csrf-token]').attr('content'),
-			async: false,
+			async: true,
 			method: 'POST',
 			url: '/watchliststate',
 			data: {
 				"uid": uid,
 				"sid": sid
 			},
-			success: function(data) {
-				watching = data;
+			success: function(watching) {
+				
+				if (watching == 1) $(".watchlist-btn").addClass("watchlist-btn-true").text("Watching");
+				if (watching == 0) $(".watchlist-btn").removeClass("watchlist-btn-true").text("Add to watchlist");
+				
+				console.log(watching);
+				
 			}
-		});
-	}
+			
+		}); 
+		
+	} 
 
-	function highlight() {
-		if (watching == 1) $(".watchlist-btn").addClass("watchlist-btn-true").text("Watching");
-		if (watching == 0) $(".watchlist-btn").removeClass("watchlist-btn-true").text("Add to watchlist");
-	}
-
-	watchState();
-	highlight();
-
-	console.log(watching); 
-
+	watchState();  
+	
 	$(".watchlist-btn").click(function() { 
 		$.ajax({
-			'_token': $('meta[name=csrf-token]').attr('content'),
-			async: false,
+			async: true,
 			method: 'POST',
 			url: '/tv/'+sid,
 			data: {
@@ -50,26 +42,52 @@ $(document).ready(function() {
 			},
 			success: function(s) {
 				console.log(s);
+				watchState(); 
 			}
 		});
 
-		watchState();
-		console.log(watching);
-		highlight();
+	
 		
 	});
 
 	$.ajax({
-		async: false,
+		async: true,
 		method: 'GET',
 		url: '/tv/'+sid+'/all',
 		success: function(s) {
 			seasons = s;
+			console.log(seasons);
+
 		}
 	});
 
-	console.log(seasons);
-
+	
+	$(".people").click(function(e){
+		
+		$.ajax({
+			async: true,
+			method: 'GET',
+			url: '/people/'+ e.target.id,
+			beforeSend: function(){ 
+				$('#loader').show();
+				$('#person-info').hide(); 
+			},
+			success: function(s) {
+				console.log(s);
+				$('#loader').hide();
+				$('#person-info').show();
+				$('#person-img').attr('src','https://image.tmdb.org/t/p/w185/'+s.profile_path);
+				$('#imdb-link').attr('href','http://www.imdb.com/name/'+s.imdb_id);
+				$('#name').text(s.name);
+				$('#birthday').text(s.birthday);
+				$('#birthplace').text(s.place_of_birth);
+				$('#bio').text(s.biography); 
+			}
+		});		
+		
+	});
+	
+	
 	$(".seasons").click(function(e) {
 		$(".seasons .active").removeClass("active");
 		$("#" + e.target.id).addClass("active");

@@ -49,7 +49,6 @@ class Schedule extends Model
 	
 	public function updatedAt($uid){
 		
-		
 		if($this->where('user_id','=',$uid)->select('updated')->first()){
 
 			return $this->where('user_id','=',$uid) 
