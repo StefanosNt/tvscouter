@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client; 
 use App\Series;
 use App\User;
+use App\Watchlist;
+use App\Schedule;
 use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
@@ -18,9 +20,11 @@ class SeriesController extends Controller
 		
 		/*	Initialization of controllers and default params	*/
 		
-		$this->client 	=	new Client;
-		$this->user		= 	new User;
-		$this->ser 		= 	new Series;
+		$this->client 		=	new Client;
+		$this->user			= 	new User;
+		$this->ser 			= 	new Series;
+		$this->watchlist	= 	new Watchlist;
+		$this->schedule		= 	new Schedule;
 		
 		$this->form_params['page'] 		= 1;
 		$this->form_params['api_key'] 	= self::$apiKey;
@@ -155,7 +159,7 @@ class SeriesController extends Controller
 		
 		/*	This function is ajaxed from the tv-series view so it determines if a user is watching a tv show or not	*/
 		
-		$watching = $this->ser->isWatching($request->get('uid'),$request->get('sid')); 
+		$watching = $this->watchlist->isWatching($request->get('uid'),$request->get('sid')); 
 		
 		return $watching == 1 ? 1 : 0;
 		
@@ -165,16 +169,16 @@ class SeriesController extends Controller
 		
 		/*If a user adds or delete a tv show from his watchlist it updates the schedule and watchlist table */
 		
-		if($this->ser->isWatching($request->get('uid'),$request->get('sid'))==0){
-			$this->ser->insertIntoWatchlist($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
+		if($this->watchlist->isWatching($request->get('uid'),$request->get('sid'))==0){
+			$this->watchlist->insert($request->get('uid') ,$request->get('sid'), $request->get('sname'), $request->get('sposter'));
 			$curDate = date('Y-m-d');   
-			self::addToSchedule($request->get('sid'),$this->ser,$curDate);
+			self::addToSchedule($request->get('sid'),$curDate);
 			$this->user->addTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
 			return "added";
 		}
 		else{
-			$this->ser->deleteFromWatchlist($request->get('uid'),$request->get('sid'));
-			$this->ser->deleteFromSchedule($request->get('uid'),$request->get('sid'));
+			$this->watchlist->remove($request->get('uid'),$request->get('sid'));
+			$this->schedule->removeSeries($request->get('uid'),$request->get('sid'));
 			$this->user->subtractTotalMinutes($request->get('totalSeriesMinutes'),Auth::user()->id);
 
 			return 'deleted';
@@ -186,21 +190,21 @@ class SeriesController extends Controller
 		
 		/*	Renders the user watchlist 	*/
 		 
-		$watchlist = json_decode($this->ser->getWatchlist(Auth::user()->id),true); 
+		$watchlist = json_decode($this->watchlist->get(Auth::user()->id),true); 
 		return view('series.watchlist',compact('watchlist'));
 		
 	}
 
 	public function showSchedule(){
 		
-		/*Renders the user watchlist */
+		/*Renders the user schedule */
   
- 		$schedule = json_decode($this->ser->getSchedule(Auth::user()->id),true);
+ 		$schedule = json_decode($this->schedule->get(Auth::user()->id),true);
 		return view('series.schedule',compact('schedule'));   
 		
 	}
 	
-	public function addToSchedule($sid,$ser,$curDate){
+	public function addToSchedule($sid,$curDate){
 		
 		$series= self::getAllSeasons($sid); 
 		$curSeason = $series['number_of_seasons']; 
@@ -208,7 +212,7 @@ class SeriesController extends Controller
 		if($series['status']!=="Canceled" && $series['status']!=="Ended"){   
 			
 			foreach ($series['season/'. $curSeason]['episodes'] as $episodes){
-
+								
 				if ($curDate <= $episodes['air_date']) {
 
 					$arr = [
@@ -223,15 +227,33 @@ class SeriesController extends Controller
 						'epoverview'	=>	$episodes['overview'],
 						'epairdate'		=>	$episodes['air_date']
 					];	
-
-					$ser->insertIntoSchedule(Auth::user()->id,$arr); 
+					
+					$schedule = new Schedule;
+					$schedule->insert(Auth::user()->id,$arr); 
+					
 				}  
 			}
 		} 
 	} 
 	 
-	public function ss(){
-		dd(self::getSeries(456));
+	public function ss(){ 
+		
+		return $this->schedule->updatedAt(Auth::user()->id);
+//		self::addToSchedule(60573,$curDate);
+//		$arr = [
+//			'sid'			=>	1,
+//			'sname'			=>	'stef', 
+//			'sposter'		=>	'sdasdasda',
+//			'snetwork'		=>	'cw',
+//			'sgerne'		=>	'Sci-fi',
+//			'season'		=>	3,
+//			'epnumber'		=>	24,
+//			'epname'		=>	'be a bear',
+//			'epoverview'	=>	'nothing is left',
+//			'epairdate'		=>	'2011-10-02'
+//		];	
+//		$this->schedule->insert(Auth::user()->id,$arr);
+//		$this->schedule->remove(10);
 //		dd(self::getRecommendations(456));
 //		return $this->user->subtractTotalMinutes(22,7);
 //		$ser = self::getSeries(46896);

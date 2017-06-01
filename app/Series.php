@@ -20,119 +20,119 @@ class Series extends Model
 		
 	}
 	
-	public function createWatchlistTable($uid){
-		
-		Schema::create('_watchlist_uid_'. $uid, function(Blueprint $table){
-			$table->increments('id');
-			$table->integer('series_id');
-            $table->string('series_name');
-            $table->text('series_poster');
-            $table->timestamps(); 
-		});
+//	public function createWatchlistTable($uid){
+//		
+//		Schema::create('_watchlist_uid_'. $uid, function(Blueprint $table){
+//			$table->increments('id');
+//			$table->integer('series_id');
+//            $table->string('series_name');
+//            $table->text('series_poster');
+//            $table->timestamps(); 
+//		});
+//	
+//	}
 	
-	}
+//	public function createScheduleTable($uid){
+//		
+//		Schema::create('_schedule_uid_'. $uid, function(Blueprint $table){
+//			$table->increments('id');
+//			$table->integer('series_id');		 
+//            $table->string('series_name');
+//            $table->text('series_poster');	 
+//			$table->string('series_network');	 
+//			$table->string('series_genre');		 
+//			$table->integer('season_number');		 
+//			$table->integer('episode_number');	 
+//			$table->string('episode_name');		 
+//			$table->text('episode_overview');	 
+//			$table->date('air_date');			 
+//			$table->date('updated');		 
+//		});
+//	
+//	}
 	
-	public function createScheduleTable($uid){
-		
-		Schema::create('_schedule_uid_'. $uid, function(Blueprint $table){
-			$table->increments('id');
-			$table->integer('series_id');		 
-            $table->string('series_name');
-            $table->text('series_poster');	 
-			$table->string('series_network');	 
-			$table->string('series_genre');		 
-			$table->integer('season_number');		 
-			$table->integer('episode_number');	 
-			$table->string('episode_name');		 
-			$table->text('episode_overview');	 
-			$table->date('air_date');			 
-			$table->date('updated');		 
-		});
+//	public function insertIntoWatchlist($uid,$sid,$sname,$sposter){
+//		DB::table('_watchlist_uid_'. $uid)->insert(
+//			[
+//				'series_id' => $sid , 
+//				'series_name' => $sname,
+//				'series_poster' => $sposter
+//			]
+//		);
+//	}	
 	
-	}
+//	public function deleteFromWatchlist($uid,$sid){
+//		
+//		DB::table('_watchlist_uid_'. $uid)
+//			->where('series_id','=',$sid)
+//			->delete(); 
+//		
+//	}
 	
-	public function insertIntoWatchlist($uid,$sid,$sname,$sposter){
-		DB::table('_watchlist_uid_'. $uid)->insert(
-			[
-				'series_id' => $sid , 
-				'series_name' => $sname,
-				'series_poster' => $sposter
-			]
-		);
-	}	
+//	public function isWatching($uid,$sid){
+//		
+//		return DB::table('_watchlist_uid_'. $uid )
+//			->where('series_id', '=', $sid)
+//			->count();
+//		
+//	}
 	
-	public function deleteFromWatchlist($uid,$sid){
-		
-		DB::table('_watchlist_uid_'. $uid)
-			->where('series_id','=',$sid)
-			->delete(); 
-		
-	}
+//	public function getWatchlist($uid){
+//		
+//		return DB::table('_watchlist_uid_'. $uid )->get();
+//		 
+//	}
 	
-	public function isWatching($uid,$sid){
-		
-		return DB::table('_watchlist_uid_'. $uid )
-			->where('series_id', '=', $sid)
-			->count();
-		
-	}
+//	public function insertIntoSchedule($uid,$arr){
+//		
+//		DB::table('_schedule_uid_'. $uid)->insert(
+//			[
+//				'series_id' 		=> $arr['sid'], 
+//				'series_name' 		=> $arr['sname'],
+//				'series_poster' 	=> $arr['sposter'],
+//				'series_network'	=> $arr['snetwork'],
+//				'series_genre'		=> $arr['sgerne'],
+//				'season_number'		=> $arr['season'],
+//				'episode_number'	=> $arr['epnumber'],
+//				'episode_name'		=> $arr['epname'],
+//				'episode_overview'	=> $arr['epoverview'],
+//				'air_date'			=> $arr['epairdate'],
+//				'updated'			=> date('Y-m-d') 
+//			]
+//		);
+//		
+//	}	
 	
-	public function getWatchlist($uid){
-		
-		return DB::table('_watchlist_uid_'. $uid )->get();
-		 
-	}
+//	public function emptySchedule($uid){
+//		
+//		$updateDate = DB::table('_schedule_uid_'. $uid)->truncate();
+//		
+//	}	
 	
-	public function insertIntoSchedule($uid,$arr){
-		
-		DB::table('_schedule_uid_'. $uid)->insert(
-			[
-				'series_id' 		=> $arr['sid'], 
-				'series_name' 		=> $arr['sname'],
-				'series_poster' 	=> $arr['sposter'],
-				'series_network'	=> $arr['snetwork'],
-				'series_genre'		=> $arr['sgerne'],
-				'season_number'		=> $arr['season'],
-				'episode_number'	=> $arr['epnumber'],
-				'episode_name'		=> $arr['epname'],
-				'episode_overview'	=> $arr['epoverview'],
-				'air_date'			=> $arr['epairdate'],
-				'updated'			=> date('Y-m-d') 
-			]
-		);
-		
-	}	
+//	public function deleteFromSchedule($uid,$sid){
+//		
+//		DB::table('_schedule_uid_'. $uid)
+//			->where('series_id','=',$sid)
+//			->delete();
+//		
+//	}	
 	
-	public function emptySchedule($uid){
-		
-		$updateDate = DB::table('_schedule_uid_'. $uid)->truncate();
-		
-	}	
+//	public function getSchedule($uid){
+//		
+//		return DB::table('_schedule_uid_'. $uid )->get();  
+//		
+//	}		
 	
-	public function deleteFromSchedule($uid,$sid){
-		
-		DB::table('_schedule_uid_'. $uid)
-			->where('series_id','=',$sid)
-			->delete();
-		
-	}	
-	
-	public function getSchedule($uid){
-		
-		return DB::table('_schedule_uid_'. $uid )->get();  
-		
-	}		
-	
-	public function getScheduleUpdateDate($uid){
-		
-		if(DB::table('_schedule_uid_'. $uid)->select('updated')->first()){
-			
-			return DB::table('_schedule_uid_'. $uid)
-				->select('updated')
-				->first()
-				->updated; 
-		}
-		
-	}		
+//	public function getScheduleUpdateDate($uid){
+//		
+//		if(DB::table('_schedule_uid_'. $uid)->select('updated')->first()){
+//			
+//			return DB::table('_schedule_uid_'. $uid)
+//				->select('updated')
+//				->first()
+//				->updated; 
+//		}
+//		
+//	}		
 	
 }

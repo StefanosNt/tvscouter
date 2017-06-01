@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB; 
 use App\Series; 
 use App\User; 
+use App\Watchlist; 
+use App\Schedule; 
 
 class HomeController extends Controller
 {
@@ -16,6 +18,8 @@ class HomeController extends Controller
 		$this->serController = new SeriesController;
 		$this->ser = new Series;
 		$this->user = new User;
+		$this->watchlist = new Watchlist;
+		$this->schedule = new Schedule;
     
 	} 
 	
@@ -26,21 +30,14 @@ class HomeController extends Controller
 																					
 		if(Auth::check()){    
 			
-			if(!Schema::hasTable('_watchlist_uid_'. Auth::user()->id) ){ 
-				$this->ser->createWatchlistTable( Auth::user()->id ); 
-			} 			
-			if(!Schema::hasTable('_schedule_uid_'. Auth::user()->id) ){ 
-				$this->ser->createScheduleTable( Auth::user()->id ); 
-			}   
-			
 			$curDate = date('Y-m-d'); 
-			$updated = $this->ser->getScheduleUpdateDate(Auth::user()->id);
+			$updated = $this->schedule->updatedAt(Auth::user()->id);
 			$watchlist = json_decode(DB::table('_watchlist_uid_'.Auth::user()->id)->get(),true);
 			if(strtotime($updated)-strtotime($curDate)>0){
 			
-				$this->ser->emptySchedule(Auth::user()->id); 
+				$this->schedule->removeSchedule(Auth::user()->id); 
 				foreach($watchlist as $w){ 
-	 				$this->serController->addToSchedule($w['series_id'],$this->ser,$curDate);   
+	 				$this->serController->addToSchedule($w['series_id'],$curDate);   
 				} 
 			}
 			  

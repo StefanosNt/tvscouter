@@ -33,7 +33,7 @@ Route::GET('/tv/search/{title}','SeriesController@searchSeries');
 
 Route::POST('/tv/{id}','SeriesController@editWatchlist'); 
 Route::POST('/watchliststate','SeriesController@getWatchlistState');
-Route::POST('/settings/update_info','userController@updateInfo')->name('update_info');
+Route::POST('/settings/update_info','UserController@updateInfo')->name('update_info');
 Route::POST('/settings/user_password_reset', 'UserController@passwordReset')->name('user.password_reset')->middleware('auth');
 
 
