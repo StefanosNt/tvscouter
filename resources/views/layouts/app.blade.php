@@ -59,7 +59,7 @@
 	<ul id="sidebar" class="side-nav fixed red z-depth-1">
 		<li id="expand-toggle" class="expanded hide-on-small-only"><a><i class="fa fa-expand white-text" aria-hidden="true"></i></a></li>
 		<li id="user-name"> <a href="/settings" class="white-text center"> {{ Auth::user()->name }}</a> </li>
-		<li id="user-img"> <img class="circle" src="http://www.imran.com/xyper_images/icon-user-default.png" width="100px"> </li>
+		<li id="user-img"> <img class="circle" src="{{URL::asset('storage')}}/{{Auth::user()->avatar}}" width="100px"> </li>
 		<li><a class="waves-effect white-text sidebar-option" href="/"><i class="material-icons white-text">home</i>HOME</a></li>
 		<li><a class="waves-effect white-text sidebar-option" href="/tv/watchlist"><i class="material-icons white-text">check</i>WATCHLIST</a></li>
 		<li><a class="waves-effect white-text sidebar-option" href="/tv/schedule"><i class="material-icons white-text">schedule</i>SCHEDULE</a></li>

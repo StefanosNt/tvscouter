@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; 
 use App\User; 
 use Hash;
+use Image;
 
 class UserController extends Controller
 {
@@ -21,9 +22,22 @@ class UserController extends Controller
 	
 	public function updateInfo(Request $request){
 		
-		$user = new User;
+		$user = new User;  
 		$user->updateInfo(Auth::user()->id,$request);
-						  
+						   
+				
+		if($request->get('avatar_path')!==NULL){
+		
+			$avatar = $request->file('avatar');
+			$filename = 'u'. Auth::user()->id. '-'. date('Ymd'). '.'. $avatar->getClientOriginalExtension();
+			
+			Image::make($avatar)->resize(500,500)->save(storage_path('app/public/'.$filename));
+			
+			Auth::user()->avatar = $filename;
+			Auth::user()->save();
+			
+		} 
+		
 		return back()->with('status','Succesfully updated');   
 		
 	}
