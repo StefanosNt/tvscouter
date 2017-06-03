@@ -108,15 +108,26 @@
  
 		@include('auth/login') 
 		@include('auth/register')
-
 	@endif
 	
 	<main class="main">
 		<div class="content">
 			@yield('content')
 		</div>
+		<div id="footer">
+			<footer class="grey lighten-4">  
+				<ul style="text-align:center;margin:0">
+					<li style="display:inline-block; padding:10px"><a href="#terms-of-service" style="color:#444">Terms of Service</a></li>
+					<li style="display:inline-block; padding:10px"><a href="#privacy-policy" style="color:#444">Privacy Policy</a></li>
+					<li style="display:inline-block; padding:10px"><a href="#about" style="color:#444">About</a></li>
+				</ul>
+				<p id="copyright">&copy; {{date('Y')==2017 ? date('Y') : '2017-'. date('Y')}} TVScouter </p>
+			</footer>			
+		</div> 
 	</main>
 	
+	@include('layouts.components.terms-of-service')
+	@include('layouts.components.privacy-policy')
+	@include('layouts.components.about')
 	
-</body>
- 
+</body> 	

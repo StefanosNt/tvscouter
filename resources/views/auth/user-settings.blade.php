@@ -1,16 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app')  
 
-<style>
-	.title {
-		margin: 40px 0 40px 0;
-	}
-</style>
-
-
-
-@section('content')
-
-
+@section('content') 
 
 <div class="container">
 	<div class="title">

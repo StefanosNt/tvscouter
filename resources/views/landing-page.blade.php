@@ -20,21 +20,21 @@
 			<div class="icon-block">
 				<h2 class="center red-text"><i class="material-icons">flash_on</i></h2>
 				<h5 class="center">TV Schedule</h5>
-				<p class="light">By adding TV shows into your watchlist TVScouter automatically makes up your TV schedule so that you can always know when any episode of your watchlist is airing.</p>
+				<p class="light center">By adding TV shows into your watchlist TVScouter automatically makes up your TV schedule so that you can always know when any episode of your watchlist is airing, in a flash.</p>
 			</div>
 		</div> 
 		<div class="col s12 m4">
 			<div class="icon-block">
 				<h2 class="center red-text"><i class="material-icons">group</i></h2>
 				<h5 class="center">Series info</h5> 
-				<p class="light">Get all the needed information about a TV show. From series genre to episodes description, you can get it all.</p>
+				<p class="light center">Get all the needed information about a TV show. From cast to episodes list, you can get it all.</p>
 			</div>
 		</div> 
 		<div class="col s12 m4">
 			<div class="icon-block">
 				<h2 class ="center red-text"><i class="material-icons">settings</i></h2>
 				<h5 class="center">Suggestions</h5> 
-				<p class="light">Tired of searching for a new show to watch? We've got you handled. With the popular section you can always have something to watch.</p>
+				<p class="light center">Tired of searching for a new show to watch? We've got you handled. With the popular section you can always have something to watch.</p>
 			</div>
 		</div>
 	</div>  
@@ -50,17 +50,9 @@
 	<div class="row">
 		<div class="col s12 center">
 			<h4>Contact </h4>
-			<p class="left-align light center"> The development of this website is in alpha stage. For any further information or request feel free ask at <b><span id="contact-email"></span></b></p>
+			<p class="left-align light center"> The development of this website is in alpha stage. For any further information or request feel free ask at <b>&#105;&#110;&#102;&#111;&#64;&#116;&#118;&#115;&#99;&#111;&#117;&#116;&#101;&#114;&#46;&#99;&#111;&#109;</b></p>
 		</div>
 	</div> 
 </div>
-
-<footer class="page-footer pt0">  
-	<div class="footer-copyright grey lighten-4">
-		<div class="container">
-			<p><a href="https://www.themoviedb.org/" target="_blank"><img class="right pl15" src="{{URL::asset('photos/powered-by-rectangle-green.svg')}}" height="40px" width="auto"alt=""></a></p>
-			<p class="black-text">This product uses the TMDb API but is not endorsed or certified by TMDb.</p>
-		</div>
-	</div>
-</footer>
+ 
 @endsection
