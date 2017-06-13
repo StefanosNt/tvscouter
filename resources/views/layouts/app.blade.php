@@ -7,9 +7,9 @@
 	<meta name="csrf-token" content="{{ Session::token() }}">
 	<title>{{config('app.name')}}</title>
 
-	<link href="{{ URL::asset('materialize/css/materialize.min.css') }}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="{{ URL::asset('font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+	<link href="{{ URL::asset('bower/materialize/dist/css/materialize.min.css') }}" rel="stylesheet">
+	<link href="{{ URL::asset('bower/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 	@yield('css') 
 	@if(Auth::check()) 
 		<link href="{{ URL::asset('css/app.css') }}" rel="stylesheet" type="text/css"> 
@@ -17,9 +17,9 @@
 		<link href="{{ URL::asset('css/landing.css') }}" rel="stylesheet" type="text/css">
 	@endif
 
-	<script src="{{ URL::asset('js/jquery-3.2.1.min.js') }}"></script> 
-	<script src="{{ URL::asset('js/jquery.mousewheel.min.js') }}"></script> 
-	<script src="{{ URL::asset('materialize/js/materialize.min.js') }}"></script>
+	<script src="{{ URL::asset('bower/jquery/dist/jquery.min.js') }}"></script> 
+	<script src="{{ URL::asset('bower/jquery-mousewheel/jquery.mousewheel.min.js') }}"></script> 
+	<script src="{{ URL::asset('bower/materialize/dist/js/materialize.min.js') }}"></script>
 	<script src="{{ URL::asset('js/app.js') }}"></script>
 	@yield('js')
  
