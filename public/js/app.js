@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	var i = 0;
-	var oldColor = "red"
+	var oldColor = "red";
 	var newColor = "red";
 	var textColor = newColor + "-text";
 	var accent = "accent-1";
@@ -10,7 +10,7 @@ $(document).ready(function() {
 	
 	var username = "info";
 	var hostname = "tvscouter.com";
-	var linktext = username + "@" + hostname 
+	var linktext = username + "@" + hostname;
 	
 	//changeTheme(oldColor, newColor);  
 	
@@ -49,7 +49,8 @@ $(document).ready(function() {
 		if (i % 2 == 0) {
 			//compressed 
 			
-			$('#expand-toggle').removeClass('expanded').addClass('compressed')
+			$('#expand-toggle').removeClass('expanded').addClass('compressed');
+			$('#expand-toggle i').removeClass('fa-compress').addClass('fa-expand');
 			$('#sidebar').css('width',50);
 			$('main').css('padding-left',50);
 			$('#user-name').hide();
@@ -60,7 +61,8 @@ $(document).ready(function() {
 		else {
 			//expanded 
 			
-			$('#expand-toggle').removeClass('compressed').addClass('expanded')
+			$('#expand-toggle').removeClass('compressed').addClass('expanded');
+			$('#expand-toggle i').removeClass('fa-expand').addClass('fa-compress'); 
 			$('#sidebar').css('width',158);
 			$('main').css('padding-left',158);
 			$('#user-name').show();

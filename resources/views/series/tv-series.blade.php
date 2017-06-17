@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-
-@section('css') <link href="{{ URL::asset('css/tv-series.css') }}" rel="stylesheet"> @endsection
 @section('js') 
 	<script> 
 		var uid = {{Auth::user()->id}};

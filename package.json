@@ -15,17 +15,19 @@
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.4.2",
     "gulp-compass": "^2.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^0.1.5",
     "jquery": "^3.1.1",
     "laravel-mix": "^0.8.3",
     "lodash": "^4.17.4",
-    "uglify": "^0.1.5",
     "vue": "^2.1.10"
   },
   "dependencies": {
     "bower": "^1.8.0",
+    "gulp-sass": "^3.1.0",
     "hammerjs": "^2.0.8"
   }
 }

@@ -10,17 +10,16 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="{{ URL::asset('bower/materialize/dist/css/materialize.min.css') }}" rel="stylesheet">
 	<link href="{{ URL::asset('bower/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-	@yield('css') 
 	@if(Auth::check()) 
-		<link href="{{ URL::asset('css/app.css') }}" rel="stylesheet" type="text/css"> 
+		<link href="{{ URL::asset('css/app.min.css') }}" rel="stylesheet" type="text/css"> 
 	@else 
-		<link href="{{ URL::asset('css/landing.css') }}" rel="stylesheet" type="text/css">
+		<link href="{{ URL::asset('css/landing.min.css') }}" rel="stylesheet" type="text/css">
 	@endif
 
 	<script src="{{ URL::asset('bower/jquery/dist/jquery.min.js') }}"></script> 
 	<script src="{{ URL::asset('bower/jquery-mousewheel/jquery.mousewheel.min.js') }}"></script> 
 	<script src="{{ URL::asset('bower/materialize/dist/js/materialize.min.js') }}"></script>
-	<script src="{{ URL::asset('js/app.js') }}"></script>
+	<script src="{{ URL::asset('js/app.min.js') }}"></script>
 	@yield('js')
  
 </head>
@@ -59,7 +58,7 @@
 	</div>
 	
 	<ul id="sidebar" class="side-nav fixed red z-depth-1">
-		<li id="expand-toggle" class="expanded hide-on-small-only"><a><i class="fa fa-expand white-text" aria-hidden="true"></i></a></li>
+		<li id="expand-toggle" class="expanded hide-on-small-only"><a><i class="fa fa-compress white-text" aria-hidden="true"></i></a></li>
 		<li id="user-name"> <a href="/settings" class="white-text center"> {{ Auth::user()->name }}</a> </li>
 		<li id="user-img"> <img class="circle" src="{{URL::asset('storage')}}/{{Auth::user()->avatar}}" width="100px"> </li>
 		<li><a class="waves-effect white-text sidebar-option" href="/"><i class="material-icons white-text">home</i>HOME</a></li>

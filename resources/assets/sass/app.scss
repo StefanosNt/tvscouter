@@ -1,51 +1,462 @@
+html,body,main 	{	height: 100%;						} 
+main 			{	padding-left: 158px; 				} 
+.content		{	min-height: 100%;					}
+.visible		{	display: block;						}
+.invisible		{	display: none;						} 
+.l23			{	left: 23px;							}
+.w50			{	width: 50px;						}
+.w100p			{	width: 100%;						}
+.pl10			{	padding-left: 10px;					}
+.pl50			{	padding-left: 50px;					}
+.pt30			{	padding-top: 30px;					}
+.pt50			{	padding-top: 50px;					}
+.pb10			{	padding-bottom: 10px;				}
+.pb20			{	padding-bottom: 20px;				}
+.pb30			{	padding-bottom: 30px;				}
+.ptb50			{	padding: 50px 0px 30px 0px;			}
+.ptblr1020		{	padding: 10px 20px;					}
+.mt0			{	margin-top: 0px;					}
+.mt30			{	margin-top: 30px;					}
+.mb10			{	margin-bottom:20px;					}
+.mb20			{	margin-bottom:20px;					}
+.mb30			{	margin-bottom:30px;					}
+.mb50			{	margin-bottom:50px;					}
+.fw100			{	font-weight: 100;					} 
+.fw200			{	font-weight: 200;					} 
+.fw300			{	font-weight: 300;					} 
+.bs0			{	box-shadow: 0 0 0;					}
+.p0				{	padding: 0!important;				}
+.btn-area a 	{	margin:10.50px 10.50px 10.50px 0;	}
+ 
+//////////////////////////////////////////////////////////////////////
+/// Sidebar
+/////////////////////////////////////////////////////////////////////
 
-// Fonts
-//@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
-// Variables
-//@import "variables";
-
-
-// Bootstrap
-//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-html,body{
-  height: 100%;
+#sidebar {
+	
+	position: fixed;   
+	z-index: 90;
+	width: 158px; 
+	a {
+		padding-left: 13px;
+		padding-right: 13px;
+	} 
+	i {
+		margin: 0 20px 0 0; 
+	} 
+	
 }
-#sidebar a{
-  padding-left: 13px;
-}
-.content{  
-  position: absolute; 
-  margin-left: 210px; 
-  margin-top: 90px;
-  clear: both;
-}
-#navbar{
-  position: absolute;
-  z-index: 99;
-  box-shadow: 0 0 0 0 , 0 0 0 0 , 0 0 0;
- } 
-#sidebar{   
-  position: fixed; 
-  z-index: 90; 
-  width: 190px; 
-  padding-top:90px;   
 
-/*  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);*/
-  
-  
-}
-@media screen and (max-width: 992px) {
-  #sidebar {  
-    transform: translateX(0%)!important;
-    width: 50px;
-    transition: width .1s;
-  } 
-  .sidebar-text{
-    display: none; 
-  }
-  .content{
-    margin-left: 70px;
-  }
+.active-item {
+	
+	background: white; 
+	box-shadow: inset 2px 0px 8px 0px rgba(149, 149, 149, 0.5);
+	&:hover {
+		background: white!important; 
+	} 
+	
 } 
+
+#sidebar-toggle {   
+	width: 50px;
+	height: 50px; 
+    top: 0;	
+	
+	a {
+		box-shadow: 0 0 0;
+		
+		&:hover{
+			box-shadow: 0 0 0;
+		}  
+ 	} 
+} 
+
+#user-img { 
+    width: 100px; 
+    margin:0 auto;
+	padding-bottom: 20px;
+}
+#user-name a,#user-name.active{
+  background:inherit;
+}
+#logo {
+	padding-left: 20px;
+}
+#header-section{
+	display: none;
+} 
+#footer{
+	position: absolute;
+	left: 0;
+	width: 100%;
+}
+#copyright { 
+	display:inline-block; 
+	float: right;
+	padding:6px; 
+	margin:0; 
+	margin-right: 20px;
+	margin-top:-37px;
+}
+
+.expanded a{
+	font-size: 1.2rem!important;
+	i { 
+		cursor: pointer;
+	}
+	&:hover{
+		background-color: transparent!important;
+	}
+	&:visited{
+		background-color: transparent!important;
+	} 
+} 
+.compressed{ 
+	padding-left: 2px;
+	font-size: 1.2rem!important;
+	a {
+		padding-left: 15px; 
+		font-size: 21px!important; 
+		margin-top: 25px;
+		i { 
+			cursor: pointer;
+		}
+		&:hover{
+			background-color: transparent!important;
+		}
+		&:visited{
+			background-color: transparent!important;
+		} 
+	}  
+} 
+
+//////////////////////////////////////////////////////////////////////
+/// Section & Top Category
+/////////////////////////////////////////////////////////////////////
+ 
+.series-img	{	
+	height: 190px; 	
+}
+.common-aspect-ratio { 
+	overflow: hidden;
+	padding-bottom: 145%;
+	a {
+	  position: absolute;
+	  top: 0;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  margin: auto;
+	}
+}
+.card-title a {
+	color: #686f73;
+	font-size: 20px;
+}
+.pop-body {
+	height: 80px;
+	padding: 10px!important;
+	overflow: hidden;
+
+}  
+
+.schedule-header{
+	font-size:2rem;
+	font-weight:300; 
+}
+
+ 
+/* Search area */
+
+#search-wrapper {
+	width: 100%;
+	top: 0;
+	height: 10px;
+}
+
+#search-box {
+	width: 70%;
+	margin: 0 auto;
+	input {
+		width: 0;
+	}
+} 
+#search-results {
+	display: none;
+	width: 100%;
+	margin-right: 10px;
+	overflow: auto;
+	min-height: 50px;
+	max-height: 400px;
+} 
+.search-results-style {
+	background: white;
+	box-shadow: 0px 4px 11px 1px rgba(123, 109, 114, 0.47);
+}
+
+.search-content {
+	padding: 5px 20px;
+	background: white;
+	margin: 0;
+}
+
+.loading {
+	padding: 10px;
+	margin-right: 10px;
+	display: none;
+	width: 100%;
+	background: white;
+	transition: box-shadow .25s;
+	border-radius: 2px;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}   
+
+.input-show {
+	height: 34px!important;
+	width: 100%!important;
+	padding-left: 20px!important;
+	background: white!important;
+	border-radius: 40px!important;
+	margin: 3px 0px 7px 0!important; 
+	border: solid 1px darkolivegreen!important;
+	box-shadow: 0 0 0 darkolivegreen!important;
+}  
+
+//////////////////////////////////////////////////////////////////////
+/// TV Series
+/////////////////////////////////////////////////////////////////////
+
+#loader {
+	text-align: center;
+	padding: 50px;
+}
+.badges {
+	padding-left: 10px;
+}
+
+.status {
+	font-weight: 400;
+	font-size: 0.8rem!important;
+	color: #fff!important;
+	border-radius: 2px;
+	float: none!important;
+	padding: 6px!important;
+	line-height: 35px!important;
+} 
+.collection-item {
+	cursor: default;
+}
+.extras-wrapper{
+	display:flex;
+	overflow: auto;
+}
+.extras{
+	display: inline-table;	
+	margin: 0px!important;  
+}
+.extras-aspect-ratio { 
+	overflow: hidden;
+	padding-bottom: 130%;
+	a{
+	  position: absolute;
+	  top: 0;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  margin: auto;
+	}
+} 
+.extras-body {
+	height: 60px;
+	width: 100px;
+	padding: 10px!important;
+	overflow: hidden; 
+}  
+.seasons{ 
+	min-width: 100px; 
+	li a{ 
+		color: initial!important;
+		&.active { 
+			background-color: rgb(0, 142, 255)!important;
+			color: white!important;
+		}
+	}
+}  
+.series-poster-wrapper{
+	height: 400px; 
+	background-size: cover!important;
+	background-attachment: fixed!important;
+}
+
+.series-poster-block {
+	float: right;
+	width: 250px;
+	margin: 60px 40px;
+}
+
+.series-poster-img {
+	max-width: 250px;
+}
+
+.episode-list-header {
+	background-color: rgb(0, 142, 255)!important; 
+	color: white;
+}
+
+.episode-list-header,
+.episode-header{
+	margin:0;
+}
+
+.watchlist-btn {
+	width: 100%;
+	margin: 5px 0px;
+	box-shadow: 0 0 0;
+	color: #2196f3;
+	background: white;
+	border: solid 2px #2196f3;
+	
+	&:hover {
+		background-color: inherit;
+		box-shadow: 0 0 0;
+	}
+	&:focus {
+		background-color: inherit;
+		color: #2196f3;
+		outline: none;
+	}
+}
+ 
+.watchlist-btn-true {
+	background-color: #2196f3!important;
+	color: white!important;
+	outline: none!important;
+} 
+
+.title-block {
+	padding: 22px 22px;
+	font-size: 18px; 
+}
+
+.title {
+	padding-right:20px;
+	display: inline-block; 
+	h2 {
+		font-weight: 300;
+		margin-bottom: 0px;
+	} 
+}   
+.rating {
+	padding-left: 20px;
+	font-size: 2.5rem;
+}
+
+.stars-container {
+	font-size: 3rem;
+	position: relative;
+	display: inline-block;
+	color: transparent;
+	&:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: '★★★★★';
+		color: lightgray;
+	}
+	&:after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: '★★★★★';
+		color: gold;
+		overflow: hidden;
+	}
+}   
+
+.stars-0:after 	{ width: 0%;  }
+.stars-10:after { width: 10%; }
+.stars-20:after { width: 20%; }
+.stars-30:after { width: 30%; }
+.stars-40:after { width: 40%; }
+.stars-50:after { width: 50%; }
+.stars-60:after { width: 60%; }
+.stars-70:after { width: 70%; }
+.stars-80:after { width: 80%; }
+.stars-90:after { width: 90%; }
+.stars-100:after{ width: 100; }
+
+
+//////////////////////////////////////////////////////////////////////
+/// Custom Scrollbar
+/////////////////////////////////////////////////////////////////////
+
+::-webkit-scrollbar {
+    width: 5px;
+	height: 4px;
+} 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(255,0,0,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+ 	-webkit-border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(255,0,0,0.4); 
+} 
+
+
+//////////////////////////////////////////////////////////////////////
+/// Responsive
+/////////////////////////////////////////////////////////////////////
+
+
+@media (max-width: 600px) {
+	/* Small */
+	main 					{	padding-left: 0!important;									}
+	#sidebar 				{ 	width: 	158px!important; z-index: 999; 						} 							
+	#user-img,#user-name	{ 	display: block!important; 									}
+	#search-box				{	widows: 70% !important;										} 
+	#header-section			{	display: block;												}
+ 	.series-poster-block	{	margin:0 auto; padding-top: 30px; float: none;				}
+	.series-poster-wrapper 	{ 	height: 350px; margin-bottom: 150px							} 
+	.title-block 			{ 	margin-top:50px; text-align: center;						} 
+	.btn-area a 			{	width: 100%;												} 
+	::-webkit-scrollbar 	{ 	display: none;												} 
+
+	#copyright{
+		margin: inherit;
+		float: none;
+		width:100%;
+		text-align: center;
+	}
+} 
+
+@media (min-width: 601px) and (max-width: 992px) {
+	
+	/* Μedium*/
+	
+	#sidebar {
+		transform: translateX(0%) !important; 
+		transition: width .1s; 
+		-webkit-transform: translateX(0%) !important;
+		-webkit-transition: width .1s;
+	} 
+	#episode-list {	margin-left: 30px; }
+	::-webkit-scrollbar { 
+		display: none;
+	} 
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+	/* Large */
+}
+
+@media (min-width: 1201px) {
+	/* extra Large */
+}
+
+
+@media (max-width: 480px) {
+	/* extra small */
+	.episode-list-header h5 { font-size:13px;}
+}
