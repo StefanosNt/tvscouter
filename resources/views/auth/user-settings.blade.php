@@ -59,8 +59,8 @@
 			</div>
 			<div class="row">
 				<div class="col s12 btn-area">
-					<a class="btn orange darken-2" href="/settings/user_password_reset"> Change Password</a>
-					<a class="btn red darken-2" href=""> Remove Account</a>
+					<a class="btn orange darken-2" href="{{action('UserController@passwordReset')}}"> Change Password</a>
+					<a class="btn red darken-2" href="{{action('UserController@removeUser')}}"> Remove Account</a>
 				</div>
 			</div>
 		</form>

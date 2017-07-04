@@ -25,14 +25,7 @@ class PeopleController extends Controller
 		$client = new Client;
 		$url 	= self::$baseURL.'/person/'. $pid; 
 		 
-        $person = $client->request('GET', $url, [
-			'verify' 		=> FALSE,
-			'form_params' 	=> 
-			[ 
-				'api_key' 	=> self::$apiKey,
-				'language'	=> 'en-US'
-			]
-		]);
+        $person = $client->request('GET', $url. '?api_key='. self::$apiKey, ['verify'=> FALSE, ]);
 		
 		return json_decode($person->getBody(),true);
 		

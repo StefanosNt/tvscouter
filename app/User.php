@@ -69,4 +69,13 @@ class User extends Authenticatable
 			->update(['minutes_watched' => $minutesWatched - $totalSeriesMinutes]);
 		
 	}
+  
+  public function removeUser($uid){
+    
+    DB::table('users')
+			->where('id', $uid)
+            ->delete();
+    
+  }
+  
 }

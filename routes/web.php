@@ -32,8 +32,10 @@ Route::POST('/tv/{id}'								,	'WatchlistController@editWatchlist');
 Route::POST('/watchliststate'						,	'WatchlistController@getWatchlistState');
 Route::POST('/settings/update_info'					,	'UserController@updateInfo')->name('update_info');
 Route::POST('/settings/user_password_reset'			,	'UserController@passwordReset')->name('user.password_reset');
+Route::GET('/settings/remove-user'					,	'UserController@removeUser');
 
 //TESTING
 
 Route::GET('/ss'									,	'SeriesController@ss');									
 Route::GET('/sss'									,	'SeriesController@sss'); 
+//Route::GET('/test'                                  ,   'UserController@test');

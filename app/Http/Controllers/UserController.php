@@ -66,6 +66,14 @@ class UserController extends Controller
 		return back()->with('status','Something went wrong');
 	}
 	
+  public function removeUser(){
+    
+      $user = new User;
+	  $user->RemoveUser(Auth::user()->id); 
+	  return redirect()->route('landing');
+  
+    
+  }
 	
 	
 }
